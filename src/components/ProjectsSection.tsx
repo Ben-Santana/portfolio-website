@@ -14,8 +14,8 @@ const projects: Project[] = [
   {
     title: "Exodus",
     description: "An agentic pentesting suite that fuses LLMs with tools in Kali Linux to perform attacks on networks.",
-    imageUrl: "/project-images/slime-mold.jpg",
-    technologies: ["Python", "Simulation", "Complex Systems"],
+    imageUrl: "/project-images/exodus.jpg",
+    technologies: ["Python", "Agent", "Kali Linux"],
     link: "https://www.sundai.club/projects/592eb5af-cd78-4449-91b6-37dc7298a093"
   },
   {
@@ -30,7 +30,7 @@ const projects: Project[] = [
     description: "React application that generates Dungeons and Dragons campaigns using an LLM.",
     imageUrl: "/project-images/Dungeons.jpg",
     technologies: ["React", "LLM", "Prisma", "PostgreSQL", "TypeScript", "Next.js", "Tailwind CSS"],
-    link: "https://github.com/Ben-Santana/Ai_Number_Generator"
+    link: "https://github.com/Ben-Santana/AI-Dungeon-Master"
   },
   {
     title: "Flock Simulation",
@@ -41,7 +41,7 @@ const projects: Project[] = [
   },
   {
     title: "Machine Learning Library",
-    description: "A custom machine learning library built from scratch for deep understanding of AI fundamentals.",
+    description: "A custom machine learning library built from scratch for a deeper understanding of AI fundamentals.",
     imageUrl: "/project-images/ml-lib.jpg",
     technologies: ["Python", "Machine Learning", "Neural Networks"],
     link: "https://github.com/Ben-Santana/Machine-Learning-Library"
@@ -69,45 +69,60 @@ export default function ProjectsSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-colors"
-              >
-                <div className="relative h-48">
-                  <Image
-                    src={project.imageUrl}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                  />
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="group relative h-96 rounded-lg shadow-lg overflow-hidden bg-white dark:bg-gray-800"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => window.open(project.link, '_blank')}
+            >
+              {/* Full-size image */}
+              <Image
+                src={project.imageUrl}
+                alt={project.title}
+                fill
+                className="object-cover transition duration-300 group-hover:blur-sm"
+              />
+            
+              {/* Text content overlay */}
+              <div className="absolute inset-0 p-6 bg-black/60 dark:bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 text-white flex flex-col justify-end">
+                <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                <p className="mb-4">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.map((tech, techIndex) => (
+                    <span
+                      key={techIndex}
+                      className="bg-gray-200/30 px-3 py-1 rounded-full text-sm"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{project.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm text-gray-600 dark:text-gray-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <a
-                    href={project.link}
-                    className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Project →
-                  </a>
-                </div>
-              </motion.div>
+                <a
+                  href={project.link}
+                  className="text-blue-300 hover:text-blue-200 font-medium"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Project →
+                </a>
+              </div>
+            </motion.div>
             ))}
+          </div>
+
+          {/* More Projects Button */}
+          <div className='text-center mt-12 w-full'>
+                <a
+                  href="https://github.com/Ben-Santana"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-gray-700 dark:text-gray-200 px-6 py-3 rounded-md font-medium hover:text-gray-500 dark:hover:text-gray-400 transition-colors"
+                >
+                  More Projects on GitHub →
+                </a>
           </div>
         </motion.div>
       </div>

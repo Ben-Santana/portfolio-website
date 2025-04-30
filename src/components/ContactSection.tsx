@@ -11,7 +11,6 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your form submission logic here
     console.log('Form submitted:', formData);
   };
 
@@ -23,7 +22,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-900">
+    <section id="contact" className="py-20 bg-gray-100 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0 }}
@@ -44,7 +43,7 @@ export default function ContactSection() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className="mt-1 h-12 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                 required
               />
             </div>
@@ -58,7 +57,7 @@ export default function ContactSection() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className="mt-1 h-12 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                 required
               />
             </div>
@@ -72,17 +71,19 @@ export default function ContactSection() {
                 value={formData.message}
                 onChange={handleChange}
                 rows={4}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm 
+                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                dark:bg-gray-700 dark:text-white"
                 required
               />
             </div>
             <motion.div
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ y: -3 }}
               whileTap={{ scale: 0.98 }}
             >
               <button
                 type="submit"
-                className="w-full bg-blue-600 dark:bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 dark:hover:bg-blue-600"
+                className="w-full bg-blue-600 focus:ring-blue-500 dark:bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-blue-700 dark:hover:bg-gray-900"
               >
                 Send Message
               </button>
