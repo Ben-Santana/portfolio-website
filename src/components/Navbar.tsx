@@ -19,7 +19,6 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center h-16">
 
-            {/* Terminal Button - Left side */}
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -35,7 +34,7 @@ export default function Navbar() {
             </motion.div>
 
 
-            {/* Centered nav icons (desktop only) */}
+            {/* desktop nav icons */}
             <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-8 text-gray-600 dark:text-gray-300">
               <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
                 <Link href="/#about" className="hover:text-gray-900 dark:hover:text-white">
@@ -54,7 +53,7 @@ export default function Navbar() {
               </motion.div>
             </div>
 
-            {/* Right: Theme toggle */}
+            {/* theme toggle */}
             <div className="ml-auto hidden md:flex items-center">
               <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.95 }}>
                 <button
@@ -67,7 +66,7 @@ export default function Navbar() {
               </motion.div>
             </div>
 
-            {/* Mobile menu button */}
+            {/* mobile menu button */}
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -85,7 +84,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* mobile menu */}
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="flex flex-col items-center justify-center px-4 pt-4 pb-6 space-y-4 bg-white dark:bg-gray-900 transition-colors border-t dark:border-gray-800 text-center">
@@ -111,7 +110,7 @@ export default function Navbar() {
                 <LuMail className={iconClass} />
               </Link>
 
-              {/* Theme toggle */}
+              {/* theme toggle */}
               <button
                 onClick={() => {
                   toggleTheme();
@@ -127,7 +126,7 @@ export default function Navbar() {
         )}
       </nav>
 
-      {/* Terminal Modal Component */}
+      {/* terminal modal */}
       <TerminalModal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
     </>
   );

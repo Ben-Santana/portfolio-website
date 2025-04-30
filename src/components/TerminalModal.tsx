@@ -94,7 +94,7 @@ export default function TerminalModal({
         response = `'${input}' is not recognized. Try "help"`;
     }
 
-    setHistory((prev) => [...prev, `> ${input}`, response]);
+    setHistory((prev) => [...prev, `C:/Users/ben> ${input}`, response]);
     setInput('');
   };
 
@@ -122,7 +122,7 @@ export default function TerminalModal({
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="bg-transparent outline-none text-gray-800 dark:text-gray-200 w-full caret-transparent"
+              className="bg-transparent outline-none text-gray-800 dark:text-gray-200 w-full"
               autoFocus
             />
           </div>

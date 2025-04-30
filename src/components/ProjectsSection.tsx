@@ -27,7 +27,7 @@ const projects: Project[] = [
   },
   {
     title: "Generative Dungeons And Dragons",
-    description: "React application that generates Dungeons and Dragons campaigns using an LLM.",
+    description: "React application that guides you through a Dungeons and Dragons campaign using an MCP.",
     imageUrl: "/project-images/Dungeons.jpg",
     technologies: ["React", "LLM", "Prisma", "PostgreSQL", "TypeScript", "Next.js", "Tailwind CSS"],
     link: "https://github.com/Ben-Santana/AI-Dungeon-Master"
@@ -78,7 +78,6 @@ export default function ProjectsSection() {
               whileTap={{ scale: 0.98 }}
               onClick={() => window.open(project.link, '_blank')}
             >
-              {/* Full-size image */}
               <Image
                 src={project.imageUrl}
                 alt={project.title}
@@ -86,7 +85,6 @@ export default function ProjectsSection() {
                 className="object-cover transition duration-300 group-hover:blur-sm"
               />
             
-              {/* Text content overlay */}
               <div className="absolute inset-0 p-6 bg-black/60 dark:bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 text-white flex flex-col justify-end">
                 <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
                 <p className="mb-4">{project.description}</p>
@@ -113,7 +111,6 @@ export default function ProjectsSection() {
             ))}
           </div>
 
-          {/* More Projects Button */}
           <div className='text-center mt-12 w-full'>
                 <a
                   href="https://github.com/Ben-Santana"

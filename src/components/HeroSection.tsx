@@ -20,7 +20,7 @@ export default function HeroSection() {
             <span>I'm a </span>
             <span className="font-semibold text-gray-800 dark:text-gray-100">
               <Typewriter
-                words={['Software Engineer', "Pianist", 'Sim Developer', 'ML Tinkerer']}
+                words={['Software Engineer', "Pianist", 'Simulation Developer', 'Lifelong Learner', 'Student']}
                 loop={true}
                 cursor
                 cursorStyle="_"
