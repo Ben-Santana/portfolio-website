@@ -82,10 +82,10 @@ export default function ProjectsSection() {
                 src={project.imageUrl}
                 alt={project.title}
                 fill
-                className="object-cover transition duration-300 group-hover:blur-sm"
+                className="object-cover transition duration-300 blur-sm md:blur-none group-hover:blur-sm "
               />
             
-              <div className="absolute inset-0 p-6 bg-black/60 dark:bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 text-white flex flex-col justify-end">
+              <div className="absolute inset-0 p-6 bg-black/60 dark:bg-black/50 opacity-100 md:opacity-0 group-hover:opacity-100 transition duration-300 text-white flex flex-col justify-end">
                 <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
                 <p className="mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
