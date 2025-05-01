@@ -1,23 +1,17 @@
 'use client';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext'; // <-- make sure this path is correct
+import { useTheme } from '../context/ThemeContext';
 
-function useDarkMode() {
-  const [isDark, setIsDark] = useState(false);
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    setIsDark(mediaQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setIsDark(e.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, []);
-  return isDark;
+interface Skill {
+  name: string;
+  distance: number;
+  size: number;
+  speed: number;
 }
-
 
 const skills = [
   { name: "Python", distance: 2, size: 0.5, speed: 0.009 },
@@ -30,7 +24,7 @@ const skills = [
   { name: "Git", distance: 3.3, size: 0.6, speed: 0.008 },
 ];
 
-function OrbitingSkill({ skill }: { skill: any }) {
+function OrbitingSkill({ skill }: { skill: Skill }) {
     const meshRef = useRef<THREE.Mesh>(null!);
     const angleRef = useRef(Math.random() * 2 * Math.PI);
     const { camera, mouse, raycaster } = useThree();

@@ -8,7 +8,7 @@ import TerminalModal from './TerminalModal'; // Make sure this import is correct
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
   const [terminalOpen, setTerminalOpen] = useState(false);
 
   const iconClass = 'h-5 w-5';

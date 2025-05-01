@@ -55,13 +55,28 @@ const projects: Project[] = [
   }
 ];
 
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
+
 export default function ProjectsSection() {
   return (
     <section id="projects" className="py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial="hidden"
+          whileInView="show"
+          variants={containerVariants}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
@@ -69,15 +84,14 @@ export default function ProjectsSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="group relative h-96 rounded-lg shadow-lg overflow-hidden bg-white dark:bg-gray-800"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => window.open(project.link, '_blank')}
-            >
+                key={index}
+                variants={cardVariants}
+                viewport={{ once: true }}
+                className="group relative h-96 rounded-lg shadow-lg overflow-hidden bg-white dark:bg-gray-800"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => window.open(project.link, '_blank')}
+              >
               <Image
                 src={project.imageUrl}
                 alt={project.title}

@@ -14,13 +14,13 @@ export default function HeroSection() {
           className="text-center"
         >
           <h1 className="text-4xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-            Hi, I'm Ben
+            Hi, I&apos;m Ben
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-2 max-w-2xl mx-auto">
-            <span>I'm a </span>
+            <span>I&apos;m a </span>
             <span className="font-semibold text-gray-800 dark:text-gray-100">
               <Typewriter
-                words={['Software Engineer', "Pianist", 'Simulation Developer', 'Lifelong Learner', 'Student']}
+                words={['Software Engineer', 'Pianist', 'Simulation Developer', 'Lifelong Learner', 'Student']}
                 loop={true}
                 cursor
                 cursorStyle="_"
