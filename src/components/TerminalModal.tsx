@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; 
 
 export default function TerminalModal({
   isOpen,
@@ -114,7 +114,7 @@ export default function TerminalModal({
             </div>
           ))}
           <div className="flex items-center mt-1">
-            <span className="mr-2 dark:text-white text-gray-900">{'>'}</span>
+            <span className="mr-2 dark:text-white text-gray-900">{'C:/Users/ben>'}</span>
             <input
               type="text"
               value={input}
