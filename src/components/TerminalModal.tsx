@@ -107,7 +107,7 @@ export default function TerminalModal({
   return (
     <div className="fixed inset-0 dark:bg-black bg-white bg-opacity-80 dark:bg-opacity-80 flex items-center justify-center z-50">
       <div className="w-full max-w-2xl dark:bg-gray-950 bg-white dark:text-white text-gray-900 p-6 rounded-md shadow-lg font-mono text-md relative">
-        <div className="overflow-y-auto max-h-96 pr-1">
+        <div className="overflow-y-auto max-h-96 pr-1 scrollbar-hide"> 
           {history.map((line, idx) => (
             <div key={idx}>
               {line}
