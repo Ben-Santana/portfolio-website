@@ -16,7 +16,7 @@ interface NavIconProps {
 
 const NavIcon = ({ children, onClick, href, className = '', title }: NavIconProps) => {
   const content = (
-    <div className="relative group flex flex-col items-center px-1 -mx-1">
+    <div className="relative group flex flex-col items-center px-1 -mx-1" title={title}>
       <motion.div 
         className="relative z-10"
         whileHover={{ y: -2 }} 

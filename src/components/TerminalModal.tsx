@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { fileSystem, navigatePath, listDirectory, FileSystemItem } from './TerminalFileSystem';
+import { fileSystem, navigatePath, FileSystemItem } from './TerminalFileSystem';
 
 export default function TerminalModal({
   isOpen,
