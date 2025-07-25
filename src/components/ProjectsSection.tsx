@@ -15,8 +15,22 @@ const projects: Project[] = [
     title: "Exodus",
     description: "An agentic pentesting suite that fuses LLMs with tools in Kali Linux to perform attacks on networks.",
     imageUrl: "/project-images/exodus.jpg",
-    technologies: ["Python", "Agent", "Kali Linux"],
+    technologies: ["Agentic", "Kali Linux", "Python"],
     link: "https://www.sundai.club/projects/592eb5af-cd78-4449-91b6-37dc7298a093"
+  },
+  {
+    title: "Intelligent D&D Narrator",
+    description: "React application that guides you through a Dungeons and Dragons campaign using MCP.",
+    imageUrl: "/project-images/Dungeons.jpg",
+    technologies: ["React", "LLM", "Prisma", "PostgreSQL", "TypeScript", "Next.js", "Tailwind CSS"],
+    link: "https://github.com/Ben-Santana/AI-Dungeon-Master"
+  },
+  {
+    title: "Wireless Security Scanner",
+    description: "Software-defined radio application for wireless protocol detection and security analysis",
+    imageUrl: "/project-images/wireless-security.jpg",
+    technologies: ["C++", "Software-Defined Radio", "Signal Processing", "FFT", "Spectrogram"],
+    link: "https://github.com/Ben-Santana/RF-Security"
   },
   {
     title: "Tomo",
@@ -26,11 +40,11 @@ const projects: Project[] = [
     link: "https://github.com/Ben-Santana/Tomo"
   },
   {
-    title: "Generative Dungeons And Dragons",
-    description: "React application that guides you through a Dungeons and Dragons campaign using an MCP.",
-    imageUrl: "/project-images/Dungeons.jpg",
-    technologies: ["React", "LLM", "Prisma", "PostgreSQL", "TypeScript", "Next.js", "Tailwind CSS"],
-    link: "https://github.com/Ben-Santana/AI-Dungeon-Master"
+    title: "Custom 3D Renderer",
+    description: "Implementation of perspective projection and matrix-based rotation for 3D rendering.",
+    imageUrl: "/project-images/3d-renderer.jpg",
+    technologies: ["Java", "3D Graphics", "Linear Algebra"],
+    link: "https://github.com/Ben-Santana/Custom-3DRenderer"
   },
   {
     title: "Flock Simulation",
@@ -38,20 +52,6 @@ const projects: Project[] = [
     imageUrl: "/project-images/flock.jpg",
     technologies: ["Python", "Simulation", "Boids Algorithm"],
     link: "https://github.com/Ben-Santana/Flock-Simulation"
-  },
-  {
-    title: "Machine Learning Library",
-    description: "A custom machine learning library built from scratch for a deeper understanding of AI fundamentals.",
-    imageUrl: "/project-images/ml-lib.jpg",
-    technologies: ["Python", "Machine Learning", "Neural Networks"],
-    link: "https://github.com/Ben-Santana/Machine-Learning-Library"
-  },
-  {
-    title: "Custom 3D Renderer",
-    description: "Implementation of perspective projection and matrix-based rotation for 3D rendering.",
-    imageUrl: "/project-images/3d-renderer.jpg",
-    technologies: ["Java", "3D Graphics", "Linear Algebra"],
-    link: "https://github.com/Ben-Santana/Custom-3DRenderer"
   }
 ];
 
@@ -71,7 +71,7 @@ const cardVariants = {
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="py-20 bg-white dark:bg-gray-900">
+    <section id="projects" className="py-20 bg-white dark:bg-gray-900 select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -88,9 +88,10 @@ export default function ProjectsSection() {
                 variants={cardVariants}
                 viewport={{ once: true }}
                 className="group relative h-96 rounded-lg shadow-lg overflow-hidden bg-white dark:bg-gray-800"
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => window.open(project.link, '_blank')}
+                transition={{ duration: 0.3 }}
               >
               <Image
                 src={project.imageUrl}

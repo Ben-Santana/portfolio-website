@@ -1,11 +1,17 @@
 'use client';
-import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { FaEnvelope, FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
 
 export default function Footer() {
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 py-8" id="contact">
       <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
         <div className="flex space-x-6 mb-4">
+          <a
+            href="mailto:basantana@wpi.edu"
+            className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+          >
+            <FaEnvelope size={24} />
+          </a>
           <a
             href="https://github.com/Ben-Santana"
             target="_blank"

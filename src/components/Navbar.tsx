@@ -3,8 +3,49 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { motion } from 'framer-motion';
-import { LuAnvil, LuMail, LuHouse } from 'react-icons/lu';
-import TerminalModal from './TerminalModal'; // Make sure this import is correct
+import { LuAnvil, LuMail, LuHouse, LuTerminal, LuBook } from 'react-icons/lu';
+import TerminalModal from './TerminalModal';
+
+interface NavIconProps {
+  children: React.ReactNode;
+  onClick?: (e: React.MouseEvent) => void;
+  href?: string;
+  className?: string;
+  title?: string;
+}
+
+const NavIcon = ({ children, onClick, href, className = '', title }: NavIconProps) => {
+  const content = (
+    <div className="relative group flex flex-col items-center px-1 -mx-1">
+      <motion.div 
+        className="relative z-10"
+        whileHover={{ y: -2 }} 
+        whileTap={{ y: 0 }}
+      >
+        {children}
+      </motion.div>
+      <motion.div 
+        className="absolute -bottom-1.5 left-1 right-1 w-auto h-0.5 bg-current transition-all duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+        initial={false}
+        transition={{ duration: 0.25, ease: 'easeOut' }}
+      />
+    </div>
+  );
+
+  if (href) {
+    return (
+      <Link href={href} className={`hover:text-gray-900 dark:hover:text-white ${className}`}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button onClick={onClick} className={`hover:text-gray-900 dark:hover:text-white ${className}`}>
+      {content}
+    </button>
+  );
+};
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,42 +56,45 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-50 shadow-sm">
+      <nav className="fixed w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center h-16">
 
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="mr-4 hidden md:block"
-            >
-              <button
-                onClick={() => setTerminalOpen(true)}
-                className="dark:text-white text-gray-800 font-mono text-xl hover:text-gray-500 transition-colors animate-bounce"
-                title="Open Terminal"
-              >
-                &gt;
-              </button>
-            </motion.div>
+
 
 
             {/* desktop nav icons */}
-            <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-8 text-gray-600 dark:text-gray-300">
-              <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
-                <Link href="/#about" className="hover:text-gray-900 dark:hover:text-white">
-                  <LuHouse className={iconClass} />
-                </Link>
-              </motion.div>
-              <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
-                <Link href="/#projects" className="hover:text-gray-900 dark:hover:text-white">
-                  <LuAnvil className={iconClass} />
-                </Link>
-              </motion.div>
-              <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
-                <Link href="/#contact" className="hover:text-gray-900 dark:hover:text-white">
-                  <LuMail className={iconClass} />
-                </Link>
-              </motion.div>
+            <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center space-x-8 text-gray-600 dark:text-gray-300">
+              <NavIcon 
+                href="#achievements"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.getElementById('achievements');
+                  if (element) {
+                    element.scrollIntoView({ 
+                      behavior: 'smooth',
+                      block: 'center'
+                    });
+                  }
+                }}
+              >
+                <LuBook className={iconClass} />
+              </NavIcon>
+              
+              <NavIcon href="/#projects">
+                <LuAnvil className={iconClass} />
+              </NavIcon>
+              
+              <NavIcon href="/#contact">
+                <LuMail className={iconClass} />
+              </NavIcon>
+              
+              <NavIcon 
+                onClick={() => setTerminalOpen(true)}
+                title="Open Terminal"
+              >
+                <LuTerminal className={iconClass} />
+              </NavIcon>
             </div>
 
             {/* theme toggle */}
@@ -101,6 +145,23 @@ export default function Navbar() {
                 className="block p-2 dark:text-white text-gray-600 hover:text-gray-900 dark:hover:text-white"
               >
                 <LuAnvil className={iconClass} />
+              </Link>
+              <Link
+                href="#achievements"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMenuOpen(false);
+                  const element = document.getElementById('achievements');
+                  if (element) {
+                    element.scrollIntoView({ 
+                      behavior: 'smooth',
+                      block: 'center'
+                    });
+                  }
+                }}
+                className="block p-2 dark:text-white text-gray-600 hover:text-gray-900 dark:hover:text-white"
+              >
+                <LuBook className={iconClass} />
               </Link>
               <Link
                 href="/#contact"
