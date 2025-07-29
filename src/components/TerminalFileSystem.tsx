@@ -20,14 +20,34 @@ export const fileSystem: FileSystemItem = {
       type: 'directory',
       name: 'projects',
       children: {
-        'portfolio': {
+        'tomo': {
           type: 'directory',
-          name: 'portfolio',
+          name: 'tomo',
           children: {}
         },
-        'other-project': {
+        'exodus': {
           type: 'directory',
-          name: 'other-project',
+          name: 'exodus',
+          children: {}
+        },
+        'gen-d-and-d': {
+          type: 'directory',
+          name: 'gen-d-and-d',
+          children: {}
+        },
+        '3d-renderer': {
+          type: 'directory',
+          name: '3d-renderer',
+          children: {}
+        },
+        'wireless-security': {
+          type: 'directory',
+          name: 'wireless-security',
+          children: {}
+        },
+        'flock-sim': {
+          type: 'directory',
+          name: 'flock-sim',
           children: {}
         }
       }

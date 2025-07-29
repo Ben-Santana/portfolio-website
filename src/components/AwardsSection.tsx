@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { LuExternalLink } from 'react-icons/lu';
 
 const awards = [
   {
@@ -44,7 +45,12 @@ export default function AwardsSection() {
                 className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 w-full"
               >
                 <div className="mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{award.title}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{award.title}</h3>
+                    {award.link && (
+                      <LuExternalLink className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                    )}
+                  </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">{award.issuer} • {award.year}</p>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300">{award.description}</p>
