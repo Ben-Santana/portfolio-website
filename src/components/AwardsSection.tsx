@@ -31,7 +31,7 @@ export default function AwardsSection() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Awards</h2>
+          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">Awards</h2>
         </motion.div>
 
         <div className="flex flex-col gap-8">
@@ -42,18 +42,18 @@ export default function AwardsSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 w-full"
+                className="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 w-full"
               >
                 <div className="mb-4">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{award.title}</h3>
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">{award.title}</h3>
                     {award.link && (
-                      <LuExternalLink className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                      <LuExternalLink className="w-4 h-4 text-neutral-500 dark:text-neutral-400" />
                     )}
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{award.issuer} • {award.year}</p>
+                  <p className="text-sm text-neutral-500 dark:text-neutral-400">{award.issuer} • {award.year}</p>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300">{award.description}</p>
+                <p className="text-neutral-600 dark:text-neutral-300">{award.description}</p>
               </motion.div>
             );
 

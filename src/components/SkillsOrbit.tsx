@@ -159,11 +159,11 @@ const SkillsTextDisplay = ({ onBack, theme }: { onBack: () => void, theme: strin
   return (
     <div className="relative w-full h-[500px] flex items-center justify-center">
       <div className="max-w-3xl w-full p-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-2">Skills & Technologies</h2>
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white text-center mb-2">Skills & Technologies</h2>
         <div className="flex justify-center mb-8">
           <button 
             onClick={onBack}
-            className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors flex items-center gap-1"
+            className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors flex items-center gap-1"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transform rotate-180" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -175,7 +175,7 @@ const SkillsTextDisplay = ({ onBack, theme }: { onBack: () => void, theme: strin
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {Object.entries(skillsByCategory).map(([category, items]) => (
             <div key={category} className="select-none rounded-lg p-4">
-              <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3 capitalize">
+              <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-3 capitalize">
                 {category}
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -184,8 +184,8 @@ const SkillsTextDisplay = ({ onBack, theme }: { onBack: () => void, theme: strin
                     key={i}
                     className={`px-3 py-1 rounded-full text-sm font-medium
                       ${theme === 'dark' 
-                        ? 'bg-gray-800 text-gray-100' 
-                        : 'bg-gray-100 text-gray-800'
+                        ? 'bg-neutral-800 text-neutral-100' 
+                        : 'bg-neutral-100 text-neutral-800'
                       }`}
                   >
                     {skill}

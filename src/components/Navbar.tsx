@@ -34,14 +34,14 @@ const NavIcon = ({ children, onClick, href, className = '', title }: NavIconProp
 
   if (href) {
     return (
-      <Link href={href} className={`hover:text-gray-900 dark:hover:text-white ${className}`}>
+      <Link href={href} className={`hover:text-neutral-900 dark:hover:text-white ${className}`}>
         {content}
       </Link>
     );
   }
 
   return (
-    <button onClick={onClick} className={`hover:text-gray-900 dark:hover:text-white ${className}`}>
+    <button onClick={onClick} className={`hover:text-neutral-900 dark:hover:text-white ${className}`}>
       {content}
     </button>
   );
@@ -56,7 +56,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm z-50 shadow-sm">
+      <nav className="fixed w-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center h-16">
 
@@ -64,7 +64,7 @@ export default function Navbar() {
 
 
             {/* desktop nav icons */}
-            <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center space-x-8 text-gray-600 dark:text-gray-300">
+            <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center space-x-8 text-neutral-600 dark:text-neutral-300">
               <NavIcon 
                 href="#achievements"
                 onClick={(e) => {
@@ -114,7 +114,7 @@ export default function Navbar() {
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors"
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   {isMenuOpen ? (
@@ -131,18 +131,18 @@ export default function Navbar() {
         {/* mobile menu */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="flex flex-col items-center justify-center px-4 pt-4 pb-6 space-y-4 bg-white dark:bg-gray-900 transition-colors border-t dark:border-gray-800 text-center">
+            <div className="flex flex-col items-center justify-center px-4 pt-4 pb-6 space-y-4 bg-white dark:bg-neutral-900 transition-colors border-t dark:border-neutral-800 text-center">
               <Link
                 href="/#about"
                 onClick={() => setIsMenuOpen(false)}
-                className="block p-2 dark:text-white text-gray-600 hover:text-gray-900 dark:hover:text-white"
+                className="block p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
               >
                 <LuHouse className={iconClass} />
               </Link>
               <Link
                 href="/#projects"
                 onClick={() => setIsMenuOpen(false)}
-                className="block p-2 dark:text-white text-gray-600 hover:text-gray-900 dark:hover:text-white"
+                className="block p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
               >
                 <LuAnvil className={iconClass} />
               </Link>
@@ -159,14 +159,14 @@ export default function Navbar() {
                     });
                   }
                 }}
-                className="block p-2 dark:text-white text-gray-600 hover:text-gray-900 dark:hover:text-white"
+                className="block p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
               >
                 <LuBook className={iconClass} />
               </Link>
               <Link
                 href="/#contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="block p-2 dark:text-white text-gray-600 hover:text-gray-900 dark:hover:text-white"
+                className="block p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
               >
                 <LuMail className={iconClass} />
               </Link>

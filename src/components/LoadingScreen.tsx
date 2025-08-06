@@ -27,13 +27,13 @@ export default function LoadingScreen({ onFinish }: { onFinish: () => void }) {
             initial={{ y: 0, opacity: 1 }}
             animate={{ y: -200, opacity: 0 }}
             transition={{ delay: 1.2, duration: 1, ease: "easeInOut" }}
-            className="text-4xl font-bold text-gray-800 relative"
+            className="text-4xl font-bold text-neutral-800 relative"
           >
             Ben Santana
             {[...Array(15)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute left-1/2 top-full w-1 h-1 bg-gray-600 rounded-full"
+                className="absolute left-1/2 top-full w-1 h-1 bg-neutral-600 rounded-full"
                 style={{ translateX: "-50%" }}
                 initial={{ opacity: 1, y: 0, scale: 1 }}
                 animate={{

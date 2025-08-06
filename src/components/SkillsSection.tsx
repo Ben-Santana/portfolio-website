@@ -10,7 +10,7 @@ const skills = {
 
 const SkillCategory = ({ title, skills, theme }: { title: string; skills: string[]; theme: string }) => (
   <div className="mb-8">
-    <h3 className="text-base font-normal text-gray-600 dark:text-gray-400 mb-3 tracking-wide">
+    <h3 className="text-base font-normal text-neutral-600 dark:text-neutral-400 mb-3 tracking-wide">
       {title}
     </h3>
     <div className="flex flex-wrap gap-2">
@@ -19,8 +19,8 @@ const SkillCategory = ({ title, skills, theme }: { title: string; skills: string
           key={index}
           className={`px-3 py-1.5 rounded-full text-sm font-medium
             ${theme === 'dark' 
-              ? 'bg-gray-800 text-gray-100 hover:bg-gray-700' 
-              : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+              ? 'bg-neutral-800 text-neutral-100 hover:bg-neutral-700' 
+              : 'bg-neutral-100 text-neutral-800 hover:bg-neutral-200'
             } transition-colors`}
         >
           {skill}
@@ -34,15 +34,15 @@ export default function SkillsSection() {
   const { theme } = useTheme();
 
   return (
-    <section id="skills" className="bg-white dark:bg-gray-900 py-12 md:py-0">
+    <section id="skills" className="bg-white dark:bg-neutral-900 py-12 md:py-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <hr className="border-t border-gray-200 dark:border-gray-700" />
+        <hr className="border-t border-neutral-200 dark:border-neutral-700" />
       </div>
       
       {/* Mobile View - Categorized Tags */}
       <div className="md:hidden py-8 px-4">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+          <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-8 text-center">
             Skills & Technologies
           </h2>
           <div className="space-y-6 px-4">
@@ -71,7 +71,7 @@ export default function SkillsSection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <hr className="border-t border-gray-200 dark:border-gray-700" />
+        <hr className="border-t border-neutral-200 dark:border-neutral-700" />
       </div>
     </section>
   );

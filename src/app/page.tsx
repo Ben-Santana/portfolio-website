@@ -29,7 +29,7 @@ export default function Home() {
           <>
             <Navbar />
             <HeroSection />
-            <section id="achievements" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
+            <section id="achievements" className="py-20 bg-white dark:bg-neutral-900 transition-colors duration-300">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col space-y-12 lg:space-y-0 lg:flex-row lg:space-x-12">
                   <AwardsSection />

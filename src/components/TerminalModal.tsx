@@ -56,9 +56,7 @@ export default function TerminalModal({
           const result = navigatePath(targetDir, currentPath, currentDir, fileSystem);
           if (result.success && result.newDir.type === 'directory') {
             const items = Object.values(result.newDir.children || {}).map((item: FileSystemItem, i) => (
-              <span key={i} className={item.type === 'directory' ? 'text-blue-400' : ''}>
-                {item.name}{item.type === 'directory' ? '/' : ''}
-              </span>
+              <span key={i} className={item.type === 'directory' ? 'text-neutral-400' : ''}>{item.name}{item.type === 'directory' ? '/' : ''}</span>
             ));
             response = <div className="grid grid-cols-2 gap-1">{items}</div>;
           } else {
@@ -66,9 +64,7 @@ export default function TerminalModal({
           }
         } else {
           const items = Object.values(currentDir.children || {}).map((item: FileSystemItem, i) => (
-            <span key={i} className={item.type === 'directory' ? 'text-blue-400' : ''}>
-              {item.name}{item.type === 'directory' ? '/' : ''}
-            </span>
+            <span key={i} className={item.type === 'directory' ? 'text-neutral-400' : ''}>{item.name}{item.type === 'directory' ? '/' : ''}</span>
           ));
           response = <div className="grid grid-cols-2 gap-1">{items}</div>;
         }
@@ -154,7 +150,7 @@ export default function TerminalModal({
               href="https://github.com/Ben-Santana"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline text-blue-400 hover:text-blue-300"
+              className="underline text-neutral-400 hover:text-neutral-300"
             >
               github.com/Ben-Santana
             </a>
@@ -164,7 +160,7 @@ export default function TerminalModal({
               href="https://linkedin.com/in/benjamin-a-santana"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline text-blue-400 hover:text-blue-300"
+              className="underline text-neutral-400 hover:text-neutral-300"
             >
               linkedin.com/in/benjamin-a-santana
             </a>
@@ -219,16 +215,16 @@ export default function TerminalModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className={`dark:bg-gray-950 bg-white dark:text-white text-gray-900 rounded-md shadow-lg text-md flex flex-col ${isMaximized ? 'w-full h-full' : 'w-full max-w-2xl max-h-[80vh] overflow-y-auto'}`}
+            className={`dark:bg-neutral-950 bg-white dark:text-white text-neutral-900 rounded-md shadow-lg text-md flex flex-col ${isMaximized ? 'w-full h-full' : 'w-full max-w-2xl max-h-[80vh] overflow-y-auto'}`}
             onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the modal
           >
-            <div className={`flex items-center justify-between p-2 bg-gray-800 ${isMaximized ? '' : 'rounded-t-md'}`}>
+            <div className={`flex items-center justify-between p-2 bg-neutral-800 ${isMaximized ? '' : 'rounded-t-md'}`}>
               <div className="flex items-center space-x-2">
                 <button onClick={onClose} className="w-3 h-3 bg-red-500 rounded-full"></button>
                 <button onClick={onClose} className="w-3 h-3 bg-yellow-500 rounded-full"></button>
                 <button onClick={() => setIsMaximized(!isMaximized)} className="w-3 h-3 bg-green-500 rounded-full"></button>
               </div>
-              <span className="text-md text-gray-400">Terminal</span>
+              <span className="text-md text-neutral-400">Terminal</span>
               <div className="w-14"></div>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
@@ -245,7 +241,7 @@ export default function TerminalModal({
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="flex-1 bg-transparent outline-none text-gray-800 dark:text-gray-200"
+                    className="flex-1 bg-transparent outline-none text-neutral-800 dark:text-neutral-200"
                     autoFocus
                     spellCheck={false}
                   />
