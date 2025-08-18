@@ -1,6 +1,7 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface Project {
   title: string;
@@ -64,12 +65,9 @@ const containerVariants = {
   },
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-};
-
 export default function ProjectsSection() {
+  const [selected, setSelected] = useState(0);
+
   return (
     <section id="projects" className="py-20 bg-white dark:bg-neutral-900 select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,49 +79,63 @@ export default function ProjectsSection() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl font-bold text-center mb-12 text-neutral-900 dark:text-white">My Projects</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                variants={cardVariants}
-                viewport={{ once: true }}
-                className="group relative h-96 rounded-lg shadow-lg overflow-hidden bg-white dark:bg-neutral-800"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => window.open(project.link, '_blank')}
-                transition={{ duration: 0.3 }}
-              >
-              <Image
-                src={project.imageUrl}
-                alt={project.title}
-                fill
-                className="object-cover transition duration-300 blur-sm md:blur-none group-hover:blur-sm "
-              />
-            
-              <div className="absolute inset-0 p-6 bg-black/60 dark:bg-black/50 opacity-100 md:opacity-0 group-hover:opacity-100 transition duration-300 text-white flex flex-col justify-end">
-                <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                <p className="mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="bg-neutral-200/30 px-3 py-1 rounded-full text-sm"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <a
-                  href={project.link}
-                  className="text-neutral-300 hover:text-neutral-200 font-medium"
-                  target="_blank"
-                  rel="noopener noreferrer"
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex md:flex-col md:w-1/4 gap-4 overflow-x-auto md:overflow-y-auto pb-2 md:pb-0">
+              {projects.map((project, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelected(index)}
+                  className={`flex-shrink-0 px-4 py-2 rounded-md text-sm md:text-base border transition-colors text-left ${
+                    selected === index
+                      ? 'bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-white'
+                      : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700'
+                  }`}
                 >
-                  View Project →
-                </a>
-              </div>
-            </motion.div>
-            ))}
+                  {project.title}
+                </button>
+              ))}
+            </div>
+            <div className="flex-1">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selected}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.5 }}
+                  className="relative h-96 rounded-lg shadow-lg overflow-hidden"
+                >
+                  <Image
+                    src={projects[selected].imageUrl}
+                    alt={projects[selected].title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 p-6 bg-black/60 dark:bg-black/50 text-white flex flex-col justify-end">
+                    <h3 className="text-2xl font-semibold mb-2">{projects[selected].title}</h3>
+                    <p className="mb-4">{projects[selected].description}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {projects[selected].technologies.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="bg-neutral-200/30 px-3 py-1 rounded-full text-sm"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <a
+                      href={projects[selected].link}
+                      className="text-neutral-300 hover:text-neutral-200 font-medium"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View Project →
+                    </a>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
 
           <div className='text-center mt-12 w-full'>
@@ -141,3 +153,4 @@ export default function ProjectsSection() {
     </section>
   );
 }
+
