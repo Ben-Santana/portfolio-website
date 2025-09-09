@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
 import { ThemeProvider } from "../context/ThemeContext";
 import "./globals.css";
 
@@ -47,7 +46,7 @@ export default function RootLayout({
                     theme = prefersDark ? 'dark' : 'light';
                     localStorage.setItem('theme', theme);
                   }
-                } catch (e) {
+                } catch (_) {
                   // If localStorage fails, default to dark
                   theme = 'dark';
                 }

@@ -5,7 +5,7 @@ import HeroSection from '../components/HeroSection';
 import ProjectsSection from '../components/ProjectsSection';
 import ContactSection from '../components/ContactSection';
 import SkillsSection from '../components/SkillsSection';
-import LoadingScreen from '../components/LoadingScreen'; // make sure the path is correct
+// LoadingScreen import removed
 import AwardsSection from '../components/AwardsSection';
 import EducationSection from '../components/EducationSection';
 import ClickSpark from '@/components/ClickSpark';
@@ -13,7 +13,7 @@ import { useTheme } from '../context/ThemeContext';
 
 export default function Home() {
   // Loading screen bypassed
-  const [loadingDone, setLoadingDone] = useState(true);
+  const [loadingDone] = useState(true);
   const { theme } = useTheme();
 
   return (

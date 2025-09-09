@@ -28,7 +28,7 @@ export default function AwardsSection() {
         </div>
 
         <div className="flex flex-col gap-8">
-          {awards.map((award, index) => {
+          {awards.map((award) => {
             const card = (
               <div className="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 w-full">
                 <div className="mb-4">

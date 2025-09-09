@@ -33,7 +33,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Update localStorage
     try {
       localStorage.setItem('theme', theme);
-    } catch (e) {
+    } catch (_) {
       // Ignore localStorage errors
     }
     
