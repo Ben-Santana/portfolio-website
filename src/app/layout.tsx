@@ -46,7 +46,7 @@ export default function RootLayout({
                     theme = prefersDark ? 'dark' : 'light';
                     localStorage.setItem('theme', theme);
                   }
-                } catch (_) {
+                } catch {
                   // If localStorage fails, default to dark
                   theme = 'dark';
                 }

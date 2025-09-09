@@ -7,7 +7,7 @@
     } else {
       document.documentElement.classList.remove('dark');
     }
-  } catch (_) {
+  } catch {
     // Fallback to dark mode if localStorage is not available
     document.documentElement.classList.add('dark');
   }
