@@ -20,13 +20,13 @@ export default function LoadingScreen({ onFinish }: { onFinish: () => void }) {
           key="loader"
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 1 } }}
+          exit={{ opacity: 0, transition: { duration: 1, ease: "easeOut" } }}
           className="fixed inset-0 z-50 bg-white flex items-center justify-center"
         >
           <motion.h1
             initial={{ y: 0, opacity: 1 }}
             animate={{ y: -200, opacity: 0 }}
-            transition={{ delay: 1.2, duration: 1, ease: "easeInOut" }}
+            transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
             className="text-4xl font-bold text-neutral-800 relative"
           >
             Ben Santana

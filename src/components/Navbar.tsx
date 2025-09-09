@@ -56,7 +56,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed w-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm z-50 shadow-sm">
+      <nav className="fixed w-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm z-50 shadow-sm transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center h-16">
 

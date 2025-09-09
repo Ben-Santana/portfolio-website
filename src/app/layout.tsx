@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { ThemeProvider } from "../context/ThemeContext";
 import "./globals.css";
 
@@ -25,6 +26,47 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
+      <head>
+        {/* Inline script to set theme before page loads */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                // First, add a class to prevent transitions during initial load
+                document.documentElement.classList.add('disable-transitions');
+                
+                // Determine theme preference
+                let theme;
+                try {
+                  // Check localStorage first
+                  theme = localStorage.getItem('theme');
+                  
+                  // If no theme in localStorage, check system preference
+                  if (!theme) {
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    theme = prefersDark ? 'dark' : 'light';
+                    localStorage.setItem('theme', theme);
+                  }
+                } catch (e) {
+                  // If localStorage fails, default to dark
+                  theme = 'dark';
+                }
+                
+                // Apply theme immediately
+                document.documentElement.classList.remove('light', 'dark');
+                document.documentElement.classList.add(theme);
+                
+                // Remove transition blocker after a short delay
+                window.addEventListener('DOMContentLoaded', function() {
+                  setTimeout(function() {
+                    document.documentElement.classList.remove('disable-transitions');
+                  }, 0);
+                });
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>

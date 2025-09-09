@@ -1,5 +1,5 @@
 'use client';
-import { motion } from 'framer-motion';
+// Animation imports removed
 import Image from 'next/image';
 
 interface Project {
@@ -55,43 +55,20 @@ const projects: Project[] = [
   }
 ];
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-};
+// Animation variants removed
 
 export default function ProjectsSection() {
   return (
     <section id="projects" className="py-20 bg-white dark:bg-neutral-900 select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          variants={containerVariants}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
+        <div>
           <h2 className="text-3xl font-bold text-center mb-12 text-neutral-900 dark:text-white">My Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <motion.div
+              <div
                 key={index}
-                variants={cardVariants}
-                viewport={{ once: true }}
                 className="group relative h-96 rounded-lg shadow-lg overflow-hidden bg-white dark:bg-neutral-800"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
                 onClick={() => window.open(project.link, '_blank')}
-                transition={{ duration: 0.3 }}
               >
               <Image
                 src={project.imageUrl}
@@ -122,7 +99,7 @@ export default function ProjectsSection() {
                   View Project →
                 </a>
               </div>
-            </motion.div>
+            </div>
             ))}
           </div>
 
@@ -136,7 +113,7 @@ export default function ProjectsSection() {
                   More Projects on GitHub →
                 </a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

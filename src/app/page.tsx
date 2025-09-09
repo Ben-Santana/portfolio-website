@@ -12,7 +12,8 @@ import ClickSpark from '@/components/ClickSpark';
 import { useTheme } from '../context/ThemeContext';
 
 export default function Home() {
-  const [loadingDone, setLoadingDone] = useState(false);
+  // Loading screen bypassed
+  const [loadingDone, setLoadingDone] = useState(true);
   const { theme } = useTheme();
 
   return (
@@ -24,7 +25,7 @@ export default function Home() {
       duration={400}
     >
       <main className="min-h-screen">
-        {!loadingDone && <LoadingScreen onFinish={() => setLoadingDone(true)} />}
+        {/* Loading screen bypassed */}
         {loadingDone && (
           <>
             <Navbar />
