@@ -43,7 +43,7 @@ export default function SkillsSection() {
       <div className="md:hidden py-8 px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-8 text-center">
-            Skills & Technologies
+            skills & technologies
           </h2>
           <div className="space-y-6 px-4">
             <SkillCategory 

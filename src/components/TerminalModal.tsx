@@ -4,6 +4,15 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fileSystem, navigatePath, FileSystemItem } from './TerminalFileSystem';
 
+const projectSlugMap: Record<string, string> = {
+  'tomo': 'tomo',
+  'exodus': 'exodus',
+  'gen-d-and-d': 'dnd-narrator',
+  '3d-renderer': '3d-renderer',
+  'wireless-security': 'wireless-security',
+  'flock-sim': 'flock-simulation',
+};
+
 export default function TerminalModal({
   isOpen,
   onClose,
@@ -73,16 +82,18 @@ export default function TerminalModal({
       case 'cd':
         const path = input.split(' ')[1] || '~';
         const result = navigatePath(path, currentPath, currentDir, fileSystem);
-        if (path === 'projects') {
-          setHistory((prev) => [...prev, `C:/Users/ben/${currentPath} ${input}`, 'Opening projects...']);
-        setInput('');
-        setTimeout(() => {
-          onClose();
-          router.push('/#projects');
-        }, 500);
-        return;
-        }
         if (result.success) {
+          const pathMatch = result.newPath.match(/^~\/projects\/(.+)$/);
+          if (pathMatch && projectSlugMap[pathMatch[1]]) {
+            const slug = projectSlugMap[pathMatch[1]];
+            setHistory((prev) => [...prev, `C:/Users/ben/${currentPath} ${input}`, `Opening ${pathMatch[1]}...`]);
+            setInput('');
+            setTimeout(() => {
+              onClose();
+              router.push(`/projects/${slug}`);
+            }, 500);
+            return;
+          }
           setCurrentPath(result.newPath);
           setCurrentDir(result.newDir);
           response = '';
@@ -193,9 +204,70 @@ export default function TerminalModal({
     setInput('');
   };
 
+  const getCompletions = (partial: string): string[] => {
+    const commands = ['help', 'about', 'projects', 'contact', 'social', 'clear', 'exit', 'sudo', 'ls', 'cd', 'pwd', 'cat'];
+    const parts = partial.split(' ');
+
+    if (parts.length <= 1) {
+      return commands.filter(c => c.startsWith(parts[0]));
+    }
+
+    const cmd = parts[0];
+    if (!['cd', 'ls', 'cat'].includes(cmd)) return [];
+
+    const arg = parts.slice(1).join(' ');
+    const lastSlash = arg.lastIndexOf('/');
+
+    let searchDir = currentDir;
+    let prefix = '';
+
+    if (lastSlash !== -1) {
+      const dirPath = arg.substring(0, lastSlash) || '/';
+      prefix = arg.substring(0, lastSlash + 1);
+      const result = navigatePath(dirPath, currentPath, currentDir, fileSystem);
+      if (!result.success || result.newDir.type !== 'directory') return [];
+      searchDir = result.newDir;
+    }
+
+    const fragment = arg.substring(lastSlash + 1);
+    if (!searchDir.children) return [];
+
+    return Object.values(searchDir.children)
+      .filter((item: FileSystemItem) => item.name.startsWith(fragment))
+      .map((item: FileSystemItem) => {
+        const name = item.type === 'directory' ? `${item.name}/` : item.name;
+        return `${cmd} ${prefix}${name}`;
+      });
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleCommand();
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      const completions = getCompletions(input);
+      if (completions.length === 1) {
+        setInput(completions[0]);
+      } else if (completions.length > 1) {
+        // Find common prefix among completions
+        let common = completions[0];
+        for (const c of completions) {
+          while (!c.startsWith(common)) {
+            common = common.slice(0, -1);
+          }
+        }
+        if (common.length > input.length) {
+          setInput(common);
+        } else {
+          setHistory(prev => [
+            ...prev,
+            `C:/Users/ben/${currentPath} ${input}`,
+            <div key="completions" className="grid grid-cols-3 gap-1">
+              {completions.map((c, i) => <span key={i}>{c.split(' ').pop()}</span>)}
+            </div>
+          ]);
+        }
+      }
     }
   };
 

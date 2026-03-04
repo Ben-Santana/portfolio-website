@@ -1,0 +1,50 @@
+## Overview
+
+The Intelligent D&D Narrator is a full-stack web application that acts as an AI-powered Dungeon Master,
+guiding players through dynamic Dungeons & Dragons campaigns. Built with React and Next.js, it leverages
+the Model Context Protocol (MCP) to give the LLM access to persistent game state, enabling rich and
+coherent storytelling across sessions.
+
+## Motivation
+
+Tabletop RPGs are incredible experiences, but they require a dedicated Dungeon Master who can invest
+significant time in world-building and session preparation. This project aims to lower that barrier by
+creating an AI narrator that can improvise, remember context, and maintain narrative consistency — making
+D&D accessible to groups that lack a dedicated DM.
+
+## Architecture
+
+The application is built on a modern full-stack TypeScript foundation:
+
+- **Frontend**: React with Next.js for server-side rendering and routing, styled with Tailwind CSS
+- **Backend**: Next.js API routes handling game logic and LLM communication
+- **Database**: PostgreSQL managed through Prisma ORM for persistent campaign and character data
+- **AI Layer**: LLM integration via MCP, giving the model access to game state, character sheets, and world lore
+
+## Key Features
+
+- **Persistent Campaigns** — Save and resume campaigns across sessions with full context preserved
+- **Character Management** — Create and track characters with stats, inventory, and backstory
+- **Dynamic Narration** — The AI adapts its storytelling based on player choices and campaign history
+- **MCP Integration** — The model can query and update game state directly, enabling mechanically accurate encounters
+
+## How MCP Ties It Together
+
+The Model Context Protocol is what makes this more than a simple chatbot. Through MCP, the LLM can:
+
+- Look up character stats and inventory before narrating combat
+- Track quest progress and reference past events naturally
+- Enforce game rules by checking against stored mechanics
+- Update the game world based on player actions
+
+## Challenges
+
+Maintaining narrative coherence over long campaigns was the primary challenge. LLMs tend to lose context
+over extended conversations, so the MCP-backed retrieval system was critical for grounding responses in
+actual game state rather than hallucinated details.
+
+## What I Learned
+
+Building this project taught me a great deal about integrating LLMs into stateful applications. The MCP
+pattern proved to be a powerful abstraction for giving models structured access to external data without
+sacrificing the flexibility of natural language interaction.

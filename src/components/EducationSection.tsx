@@ -16,12 +16,12 @@ const educationDetails = [
 
 export default function EducationSection() {
   return (
-    <div className="w-full lg:w-1/2 select-none">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">Education</h2>
+    <div className="w-full lg:w-1/2 select-none flex flex-col">
+      <div className="text-center mb-4">
+        <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">education</h2>
       </div>
 
-      <div className="bg-white dark:bg-neutral-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 w-full">
+      <div className="bg-white dark:bg-neutral-800 p-8 rounded-xl shadow-lg w-full flex-1">
         <div className="mb-6 text-left border-b border-neutral-200 dark:border-neutral-700 pb-4">
           <h3 className="text-xl font-bold text-neutral-900 dark:text-white">Worcester Polytechnic Institute</h3>
           <p className="text-md text-neutral-500 dark:text-neutral-400">BS, Computer Science 2024-2028</p>

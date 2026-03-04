@@ -1,10 +1,10 @@
 'use client';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, Html } from '@react-three/drei';
+import { EffectComposer, Pixelation } from '@react-three/postprocessing';
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useTheme } from '../context/ThemeContext';
-import { Text } from '@react-three/drei';
 
 interface Skill {
   name: string;
@@ -28,7 +28,6 @@ const skills: Skill[] = [
 
 function OrbitingSkill({ skill }: { skill: Skill }) {
   const meshRef = useRef<THREE.Mesh>(null!);
-  const textRef = useRef<THREE.Mesh>(null!);
   const angleRef = useRef(Math.random() * 2 * Math.PI);
   const { camera, mouse, raycaster } = useThree();
   const { theme } = useTheme();
@@ -41,12 +40,10 @@ function OrbitingSkill({ skill }: { skill: Skill }) {
   const baseVector = useRef(new THREE.Vector3(skill.distance, 0, 0));
 
   useFrame(() => {
-    // Rotate position
     angleRef.current += skill.speed;
     const rotated = baseVector.current.clone().applyAxisAngle(axis.current, angleRef.current);
     meshRef.current.position.set(rotated.x, rotated.y, rotated.z);
 
-    // Mouse proximity
     const ndcMouse = new THREE.Vector2(mouse.x, mouse.y);
     raycaster.setFromCamera(ndcMouse, camera);
     const point = new THREE.Vector3();
@@ -54,48 +51,36 @@ function OrbitingSkill({ skill }: { skill: Skill }) {
     const dist = point.distanceTo(meshRef.current.position);
     const isClose = dist < 3;
 
-    // Smooth scale and opacity
     scaleRef.current = THREE.MathUtils.lerp(scaleRef.current, isClose ? 1.6 : 1, 0.1);
     meshRef.current.scale.setScalar(scaleRef.current);
 
     setLabelOpacity((prev) =>
       THREE.MathUtils.lerp(prev, isClose ? 1 : 0, 0.1)
     );
-
-    // Label positioning and camera-facing orientation
-    if (textRef.current) {
-      const camPos = camera.position.clone();
-      const direction = meshRef.current.position.clone().sub(camPos).normalize();
-      const labelPos = meshRef.current.position.clone().add(direction.multiplyScalar(-skill.size - 0.6));
-      textRef.current.position.copy(labelPos);
-      textRef.current.quaternion.copy(camera.quaternion); // camera-aligned
-
-      // Opacity settings
-      if (textRef.current.material instanceof THREE.MeshBasicMaterial) {
-        textRef.current.material.opacity = labelOpacity;
-        textRef.current.material.transparent = true;
-        textRef.current.material.depthWrite = false;
-      }
-    }
   });
 
   return (
-    <>
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[skill.size, 32, 32]} />
-        <meshStandardMaterial color={theme === 'dark' ? '#FFFFFF' : '#595959'} />
-      </mesh>
-      <Text
-        ref={textRef}
-        fontSize={0.2}
-        font='/fonts/NeueHaasDisplay-Bold.ttf'
-        color={theme === 'dark' ? '#111827' : '#ffffff'}
-        anchorX="center"
-        anchorY="middle"
+    <mesh ref={meshRef}>
+      <sphereGeometry args={[skill.size, 32, 32]} />
+      <meshStandardMaterial color={theme === 'dark' ? '#FFFFFF' : '#595959'} />
+      <Html
+        center
+        distanceFactor={8}
+        style={{
+          opacity: labelOpacity,
+          transition: 'opacity 0.1s',
+          pointerEvents: 'none',
+          whiteSpace: 'nowrap',
+        }}
       >
-        {skill.name}
-      </Text>
-    </>
+        <span
+          className="text-lg font-bold select-none"
+          style={{ color: theme === 'dark' ? '#fff' : '#fff' }}
+        >
+          {skill.name}
+        </span>
+      </Html>
+    </mesh>
   );
 }
 
@@ -139,7 +124,7 @@ function CenterLabel({ onClick }: { onClick: () => void }) {
         ref={labelRef}
         fontSize={0.2}
         font='/fonts/NeueHaasDisplay-Bold.ttf'
-        color={theme === 'dark' ? '#111827' : '#ffffff'}
+        color={theme === 'dark' ? '#ffffff' : '#ffffff'}
         anchorX="center"
         anchorY="middle"
       >
@@ -157,9 +142,9 @@ const SkillsTextDisplay = ({ onBack, theme }: { onBack: () => void, theme: strin
   };
 
   return (
-    <div className="relative w-full h-[500px] flex items-center justify-center">
+    <div className="relative w-full h-full min-h-[500px] flex items-center justify-center">
       <div className="max-w-3xl w-full p-6">
-        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white text-center mb-2">Skills & Technologies</h2>
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white text-center mb-2">skills & technologies</h2>
         <div className="flex justify-center mb-8">
           <button 
             onClick={onBack}
@@ -200,31 +185,43 @@ const SkillsTextDisplay = ({ onBack, theme }: { onBack: () => void, theme: strin
   );
 };
 
-export default function SkillsOrbit3D() {
+function CenterSphere() {
   const { theme } = useTheme();
-  const [viewMode, setViewMode] = useState<'3d' | 'text'>('text');
-
-  const toggleView = () => {
-    setViewMode(prev => prev === '3d' ? 'text' : '3d');
-  };
-
-  if (viewMode === 'text') {
-    return <SkillsTextDisplay onBack={toggleView} theme={theme} />;
-  }
-
+  const color = theme === 'dark' ? '#c8c8c8' : '#595959';
   return (
-    <div className="w-full h-[500px] user-select-none">
-      <Canvas camera={{ position: [0, 6, 8], fov: 60 }}>
-        <ambientLight intensity={3} />
-        <pointLight position={[0, 0, 0]} />
+    <group>
+      <mesh position={[0, 0, 0]}>
+        <sphereGeometry args={[0.23, 32, 32]} />
+        <meshBasicMaterial color={color} />
+      </mesh>
+      <mesh position={[0, 0, 0]}>
+        <sphereGeometry args={[0.35, 32, 32]} />
+        <meshBasicMaterial color={color} transparent opacity={0.15} />
+      </mesh>
+      <mesh position={[0, 0, 0]}>
+        <sphereGeometry args={[0.5, 32, 32]} />
+        <meshBasicMaterial color={color} transparent opacity={0.05} />
+      </mesh>
+    </group>
+  );
+}
 
-        <CenterLabel onClick={toggleView} />
+export default function SkillsOrbit3D() {
+  return (
+    <div className="w-full h-full min-h-[500px] user-select-none">
+      <Canvas camera={{ position: [0, 6, 8], fov: 60 }}>
+        <ambientLight intensity={0.3} />
+        <pointLight position={[0, 0, 0]} intensity={8} />
 
         {skills.map((skill, index) => (
           <OrbitingSkill key={index} skill={skill} />
         ))}
 
         <OrbitControls enableZoom={false} enablePan={false} />
+
+        <EffectComposer>
+          <Pixelation granularity={8} />
+        </EffectComposer>
       </Canvas>
     </div>
   );

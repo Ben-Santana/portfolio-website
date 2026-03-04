@@ -11,6 +11,7 @@ module.exports = {
       fontFamily: {
         sans: ['"Neue Haas Grotesk Display Pro"', 'sans-serif'],
         mono: ['"IBM Plex Mono"', 'monospace'],
+        bebas: ['"Bebas Neue"', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -55,6 +56,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwind-scrollbar-hide')
+    require('tailwind-scrollbar-hide'),
+    require('@tailwindcss/typography'),
   ],
 }

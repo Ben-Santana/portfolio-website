@@ -1,0 +1,56 @@
+## Overview
+
+This project is a real-time simulation of flocking behavior, implementing Craig Reynolds' Boids
+algorithm to model the emergent movement patterns of fish schools and bird flocks. Individual agents
+follow simple local rules, yet the collective behavior that emerges is strikingly lifelike.
+
+## Motivation
+
+Flocking is one of the most elegant examples of emergence in nature — complex, coordinated group
+behavior arising from simple individual rules. I wanted to implement this myself to explore how
+minimal rule sets can produce rich, organic-looking motion, and to build an intuitive understanding
+of agent-based simulation.
+
+## The Boids Algorithm
+
+Each agent (boid) follows three fundamental rules:
+
+### Separation
+Boids steer away from neighbors that get too close, preventing collisions and maintaining personal space.
+
+### Alignment
+Boids adjust their heading to match the average direction of nearby flock members, creating coordinated movement.
+
+### Cohesion
+Boids steer toward the average position of their neighbors, keeping the flock together as a group.
+
+These three rules, applied simultaneously with tunable weights, produce remarkably realistic flocking behavior.
+
+## Technical Implementation
+
+- **Language**: Python with real-time visualization
+- **Spatial Optimization**: Efficient neighbor lookups to maintain performance with hundreds of agents
+- **Parameter Tuning**: Adjustable weights for separation, alignment, and cohesion forces
+- **Boundary Handling**: Agents wrap around or reflect off screen edges depending on configuration
+
+## Emergent Behaviors
+
+With the right parameter tuning, several natural-looking phenomena emerge:
+
+- **Flock splitting and merging** as groups encounter obstacles or each other
+- **Swirling vortex patterns** when cohesion is strong relative to alignment
+- **Lane formation** in confined spaces as agents self-organize into streams
+- **Predator avoidance** when an external threat force is introduced
+
+## Challenges
+
+Performance optimization was the main challenge. Naively checking every boid against every other
+boid gives O(n^2) complexity, which becomes prohibitive with large flocks. Implementing spatial
+partitioning reduced neighbor queries to near-constant time and allowed simulations with hundreds
+of agents at smooth frame rates.
+
+## What I Learned
+
+This project was a powerful lesson in emergence and complex systems. It demonstrated how simple,
+local rules can produce behavior that appears intelligent and coordinated at the macro level —
+a principle that extends far beyond graphics into fields like robotics, economics, and artificial life.

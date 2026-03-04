@@ -1,0 +1,52 @@
+## Overview
+
+Tomo is a Space Invaders-inspired game with a twist: the codebase itself evolves between levels,
+powered by a large language model. Each level introduces new game mechanics, enemy behaviors, and
+challenges that didn't exist in the previous level — all generated and integrated by an LLM at runtime.
+
+## Motivation
+
+Most games ship with a fixed set of mechanics. What if a game could surprise you every time you
+played? Tomo explores this idea by using LLMs not as a narrative tool, but as a game design tool —
+one that can write and inject new gameplay code on the fly. The result is a game where no two
+playthroughs follow the same mechanical progression.
+
+## How It Works
+
+The game loop operates in two phases:
+
+### Play Phase
+The current level plays like a classic space invaders game — the player controls a ship, dodges
+projectiles, and defeats waves of enemies. The core engine handles rendering, collision detection,
+and input processing.
+
+### Evolution Phase
+Between levels, the LLM analyzes the current game state and generates new Python code that
+introduces novel mechanics. This might include:
+
+- New enemy types with unique movement patterns
+- Modified projectile behaviors (homing, splitting, etc.)
+- Environmental hazards or power-ups
+- Changes to the scoring system or win conditions
+
+The generated code is validated and sandboxed before being integrated into the running game.
+
+## Technical Details
+
+- **Engine**: Custom Python game engine built with Pygame
+- **LLM Integration**: Code generation with structured output for reliable mechanical integration
+- **Sandboxing**: Generated code runs in a restricted environment to prevent breaking the core engine
+- **State Management**: Game state is serialized between levels for the LLM to reason about
+
+## Challenges
+
+The hardest part was ensuring that LLM-generated code would integrate cleanly with the existing
+engine. Generated mechanics need to use the right APIs, respect the coordinate system, and not
+conflict with existing behaviors. Designing a sufficiently structured yet flexible interface for
+code injection was the core engineering challenge.
+
+## What I Learned
+
+Tomo pushed me to think about code as data — something that can be generated, validated, and
+composed dynamically. It also revealed fascinating insights about what LLMs understand (and don't
+understand) about game design when forced to express ideas as executable code.

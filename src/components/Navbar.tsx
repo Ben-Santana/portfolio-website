@@ -1,28 +1,31 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useTheme } from '../context/ThemeContext';
 import { motion } from 'framer-motion';
-import { LuAnvil, LuMail, LuHouse, LuTerminal, LuBook } from 'react-icons/lu';
+import { LuAnvil, LuMail, LuHouse, LuTerminal, LuBook, LuCar } from 'react-icons/lu';
 import TerminalModal from './TerminalModal';
 
 interface NavIconProps {
   children: React.ReactNode;
+  label?: string;
   onClick?: (e: React.MouseEvent) => void;
   href?: string;
   className?: string;
   title?: string;
 }
 
-const NavIcon = ({ children, onClick, href, className = '', title }: NavIconProps) => {
+const NavIcon = ({ children, label, onClick, href, className = '', title }: NavIconProps) => {
   const content = (
-    <div className="relative group flex flex-col items-center px-1 -mx-1" title={title}>
+    <div className="relative group flex items-center gap-1.5 px-1 -mx-1" title={title}>
       <motion.div 
-        className="relative z-10"
+        className="relative z-10 flex items-center gap-1.5"
         whileHover={{ y: -2 }} 
         whileTap={{ y: 0 }}
       >
         {children}
+        {label && <span className="text-sm">{label}</span>}
       </motion.div>
       <motion.div 
         className="absolute -bottom-1.5 left-1 right-1 w-auto h-0.5 bg-current transition-all duration-300 origin-left scale-x-0 group-hover:scale-x-100"
@@ -49,24 +52,53 @@ const NavIcon = ({ children, onClick, href, className = '', title }: NavIconProp
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === '/';
 
   const iconClass = 'h-5 w-5';
 
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const progress = Math.min(window.scrollY / 200, 1);
+      setScrollProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
-      <nav className="fixed w-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm z-50 shadow-sm transition-colors duration-300">
+      <nav
+        className="fixed w-full z-50"
+        style={{
+          backgroundColor: theme === 'dark'
+            ? `rgba(23, 23, 23, ${1 - scrollProgress * 0.1})`
+            : `rgba(255, 255, 255, ${1 - scrollProgress * 0.1})`,
+          backdropFilter: `blur(${scrollProgress * 8}px)`,
+          boxShadow: scrollProgress > 0.1 ? `0 1px 3px rgba(0,0,0,${scrollProgress * 0.1})` : 'none',
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center h-16">
 
-
-
+            {!isHome && (
+              <Link
+                href="/"
+                className="absolute left-0 hidden md:block text-xl font-bold text-neutral-800 dark:text-neutral-100 hover:text-neutral-600 dark:hover:text-white transition-colors"
+              >
+                ben santana
+              </Link>
+            )}
 
             {/* desktop nav icons */}
             <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center space-x-8 text-neutral-600 dark:text-neutral-300">
               <NavIcon 
-                href="#achievements"
+                href="/#achievements"
+                label="credentials"
                 onClick={(e) => {
                   e.preventDefault();
                   const element = document.getElementById('achievements');
@@ -81,19 +113,23 @@ export default function Navbar() {
                 <LuBook className={iconClass} />
               </NavIcon>
               
-              <NavIcon href="/#projects">
+              <NavIcon href="/#projects" label="projects">
                 <LuAnvil className={iconClass} />
               </NavIcon>
               
-              <NavIcon href="/#contact">
+              <NavIcon href="/#contact" label="contact">
                 <LuMail className={iconClass} />
               </NavIcon>
               
               <NavIcon 
                 onClick={() => setTerminalOpen(true)}
-                title="Open Terminal"
+                label="terminal"
               >
                 <LuTerminal className={iconClass} />
+              </NavIcon>
+
+              <NavIcon href="/skills" label="skills">
+                <LuCar className={iconClass} />
               </NavIcon>
             </div>
 
@@ -135,16 +171,10 @@ export default function Navbar() {
               <Link
                 href="/#about"
                 onClick={() => setIsMenuOpen(false)}
-                className="block p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
+                className="flex items-center gap-2 p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
               >
                 <LuHouse className={iconClass} />
-              </Link>
-              <Link
-                href="/#projects"
-                onClick={() => setIsMenuOpen(false)}
-                className="block p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
-              >
-                <LuAnvil className={iconClass} />
+                <span className="text-sm">Home</span>
               </Link>
               <Link
                 href="#achievements"
@@ -159,16 +189,26 @@ export default function Navbar() {
                     });
                   }
                 }}
-                className="block p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
+                className="flex items-center gap-2 p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
               >
                 <LuBook className={iconClass} />
+                <span className="text-sm">Credentials</span>
+              </Link>
+              <Link
+                href="/#projects"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center gap-2 p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
+              >
+                <LuAnvil className={iconClass} />
+                <span className="text-sm">Projects</span>
               </Link>
               <Link
                 href="/#contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="block p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
+                className="flex items-center gap-2 p-2 dark:text-white text-neutral-600 hover:text-neutral-900 dark:hover:text-white"
               >
                 <LuMail className={iconClass} />
+                <span className="text-sm">Contact</span>
               </Link>
 
               {/* theme toggle */}

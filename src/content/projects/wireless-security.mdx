@@ -1,0 +1,50 @@
+## Overview
+
+The Wireless Security Scanner is a software-defined radio (SDR) application written in C++ that detects,
+identifies, and analyzes wireless protocols in real time. It processes raw RF signals to produce spectrograms
+and frequency analysis, helping identify potential security vulnerabilities in wireless communications.
+
+## Motivation
+
+Wireless networks are everywhere, yet most security analysis tools operate at the protocol level — they
+assume you already know what you're looking at. This project takes a different approach by working at the
+signal level, using SDR to capture raw radio frequency data and applying digital signal processing
+techniques to identify and characterize wireless transmissions from the ground up.
+
+## Signal Processing Pipeline
+
+The application processes RF data through several stages:
+
+1. **Capture** — Raw IQ samples from the SDR hardware are buffered for processing
+2. **FFT Analysis** — Fast Fourier Transform converts time-domain samples into frequency-domain representations
+3. **Spectrogram Generation** — Sequential FFT frames are assembled into a visual spectrogram showing signal activity over time
+4. **Protocol Detection** — Frequency patterns, bandwidth, and modulation characteristics are matched against known protocol signatures
+5. **Security Analysis** — Detected protocols are evaluated for known vulnerabilities and misconfigurations
+
+## Technical Implementation
+
+- **Language**: C++ for performance-critical signal processing
+- **FFT Engine**: Custom-optimized FFT implementation for real-time processing
+- **Visualization**: Real-time spectrogram rendering with configurable frequency range and resolution
+- **Protocol Database**: Extensible signature database for Wi-Fi, Bluetooth, Zigbee, and other common protocols
+
+## Key Features
+
+- **Real-time spectrogram** display of the RF environment
+- **Automatic protocol identification** based on signal characteristics
+- **Frequency scanning** across configurable ranges
+- **Signal strength monitoring** with historical tracking
+- **Security assessment** of detected wireless networks
+
+## Challenges
+
+Working at the signal level introduces significant complexity. RF noise, multipath interference, and
+overlapping transmissions all complicate protocol detection. Tuning the FFT parameters (window size,
+overlap, windowing function) to balance frequency resolution against time resolution required extensive
+experimentation.
+
+## What I Learned
+
+This project gave me hands-on experience with digital signal processing concepts that are usually
+confined to textbooks. Understanding how wireless protocols manifest at the physical layer provides
+a perspective on wireless security that higher-level tools simply cannot offer.

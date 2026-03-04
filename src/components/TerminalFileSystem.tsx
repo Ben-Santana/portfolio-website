@@ -102,7 +102,15 @@ export const navigatePath = (path: string, currentPath: string, currentDir: File
     };
   }
 
-  // Handle relative paths
+  // Handle absolute paths starting with ~/
+  if (path.startsWith('~/') || path === '~') {
+    const relativePath = path.slice(2);
+    if (!relativePath) {
+      return { success: true, newPath: '~', newDir: root };
+    }
+    return navigatePath(relativePath, '~', root, root);
+  }
+
   const pathSegments = path.split('/').filter(segment => segment !== '');
   let newCurrentDir = currentDir;
   

@@ -1,0 +1,44 @@
+## Overview
+
+Exodus is an agentic penetration testing suite built to bridge the gap between large language models and
+real-world offensive security tooling. Rather than treating LLMs as passive assistants, Exodus gives them
+agency — the ability to plan, execute, and adapt multi-step attack chains using the full arsenal of tools
+available in Kali Linux.
+
+## Motivation
+
+Traditional penetration testing requires deep expertise across networking, exploitation, and post-exploitation
+phases. While automated scanners exist, they lack the reasoning capabilities needed to chain findings together
+intelligently. Exodus was born from the idea that LLMs, when given the right tools and context, could replicate
+the decision-making process of a skilled pentester.
+
+## How It Works
+
+The system operates through an agentic loop where the LLM:
+
+1. **Reconnaissance** — Gathers information about the target network using tools like Nmap, Whois, and DNS enumeration
+2. **Analysis** — Interprets scan results and identifies potential attack vectors
+3. **Exploitation** — Selects and executes appropriate tools from the Kali Linux toolkit
+4. **Adaptation** — Adjusts strategy based on results, pivoting when initial approaches fail
+
+The LLM doesn't just run commands blindly — it maintains context across the entire engagement, understanding
+how each discovery relates to the broader attack surface.
+
+## Technical Details
+
+- **Agent Framework**: Custom Python-based agent loop with tool-use capabilities
+- **Tool Integration**: Direct interface to Kali Linux utilities (Nmap, Metasploit, Hydra, etc.)
+- **Context Management**: Maintains a structured representation of discovered hosts, services, and vulnerabilities
+- **Safety Controls**: Built-in scope limitations to prevent unintended lateral movement
+
+## Challenges
+
+One of the biggest challenges was designing the tool interface layer. LLMs need structured, predictable
+output from security tools, but many Kali utilities have inconsistent output formats. Building robust
+parsers for each tool's output was essential for reliable agent behavior.
+
+## What I Learned
+
+This project deepened my understanding of both offensive security methodology and the practical limitations
+of agentic AI systems. Prompt engineering for tool-use is fundamentally different from conversational AI —
+precision and structured reasoning are paramount.

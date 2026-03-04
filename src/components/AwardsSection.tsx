@@ -22,15 +22,15 @@ const awards = [
 
 export default function AwardsSection() {
   return (
-    <div className="w-full lg:w-1/2 select-none">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">Awards</h2>
+    <div className="w-full lg:w-1/2 select-none flex flex-col">
+        <div className="text-center mb-4">
+          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">awards</h2>
         </div>
 
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 flex-1">
           {awards.map((award) => {
             const card = (
-              <div className="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 w-full">
+              <div className="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg w-full">
                 <div className="mb-4">
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">{award.title}</h3>

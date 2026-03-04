@@ -1,0 +1,53 @@
+## Overview
+
+This project is a 3D renderer built from scratch in Java, implementing perspective projection and
+matrix-based transformations without relying on any graphics libraries. Every pixel on screen is
+calculated through hand-written linear algebra — from vertex transformation to rasterization.
+
+## Motivation
+
+Graphics APIs like OpenGL and Vulkan abstract away the mathematics that make 3D rendering possible.
+While convenient, this abstraction hides a beautiful and fundamental area of computer science. I built
+this renderer to understand, at the deepest level, how 3D scenes are transformed into 2D images.
+
+## The Rendering Pipeline
+
+The renderer implements a classic pipeline:
+
+1. **Model Space** — Vertices are defined relative to each object's local origin
+2. **World Transform** — Objects are positioned in the scene using translation, rotation, and scale matrices
+3. **View Transform** — The scene is transformed relative to the camera's position and orientation
+4. **Projection** — 3D coordinates are projected onto a 2D plane using perspective division
+5. **Rasterization** — Projected triangles are filled pixel-by-pixel on screen
+
+## Matrix Operations
+
+All transformations are implemented as 4x4 homogeneous matrices:
+
+- **Rotation** — Separate matrices for rotation around X, Y, and Z axes, composable for arbitrary orientations
+- **Translation** — Shifting objects through 3D space
+- **Scaling** — Uniform and non-uniform scaling
+- **Perspective Projection** — Mapping 3D points to 2D with depth-based foreshortening
+
+Matrix multiplication is performed manually, giving complete control over the transformation pipeline.
+
+## Key Features
+
+- **Real-time rotation** of 3D objects with keyboard controls
+- **Perspective projection** with configurable field of view
+- **Wireframe and filled rendering** modes
+- **Z-buffering** for correct depth ordering of overlapping faces
+- **Multiple geometric primitives** — cubes, pyramids, and custom meshes
+
+## Challenges
+
+Getting perspective projection right was surprisingly tricky. Small errors in the projection matrix
+lead to wildly distorted results, and debugging requires a solid mental model of how homogeneous
+coordinates work. Z-buffer precision was another subtle issue — floating point artifacts cause
+z-fighting between coplanar surfaces.
+
+## What I Learned
+
+Building a renderer from scratch cemented my understanding of linear algebra in a way that no
+textbook could. Seeing a cube rotate on screen, knowing that every pixel was placed by code I wrote
+using math I understood, was one of the most satisfying moments in my programming journey.
