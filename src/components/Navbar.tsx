@@ -18,20 +18,19 @@ interface NavIconProps {
 
 const NavIcon = ({ children, label, onClick, href, className = '', title }: NavIconProps) => {
   const content = (
-    <div className="relative group flex items-center gap-1.5 px-1 -mx-1" title={title}>
+    <div className="relative group flex items-center justify-center px-1 -mx-1" title={title}>
       <motion.div 
-        className="relative z-10 flex items-center gap-1.5"
+        className="relative z-10 flex items-center"
         whileHover={{ y: -2 }} 
         whileTap={{ y: 0 }}
       >
         {children}
-        {label && <span className="text-sm">{label}</span>}
       </motion.div>
-      <motion.div 
-        className="absolute -bottom-1.5 left-1 right-1 w-auto h-0.5 bg-current transition-all duration-300 origin-left scale-x-0 group-hover:scale-x-100"
-        initial={false}
-        transition={{ duration: 0.25, ease: 'easeOut' }}
-      />
+      {label && (
+        <span className="absolute top-full mt-1 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+          {label}
+        </span>
+      )}
     </div>
   );
 

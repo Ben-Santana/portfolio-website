@@ -12,7 +12,7 @@ export default function TableOfContents() {
   const [headings, setHeadings] = useState<TocItem[]>([]);
   const [activeId, setActiveId] = useState('');
   const isClickScrolling = useRef(false);
-  const clickTimeoutRef = useRef<NodeJS.Timeout>();
+  const clickTimeoutRef = useRef<NodeJS.Timeout>(undefined);
 
   useEffect(() => {
     const article = document.querySelector('article');
