@@ -95,7 +95,7 @@ export default function Navbar() {
 
             {/* desktop nav icons */}
             <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center space-x-8 text-neutral-600 dark:text-neutral-300">
-              <NavIcon 
+              {/* <NavIcon 
                 href="/#achievements"
                 label="credentials"
                 onClick={(e) => {
@@ -114,7 +114,7 @@ export default function Navbar() {
               
               <NavIcon href="/#projects" label="projects">
                 <LuAnvil className={iconClass} />
-              </NavIcon>
+              </NavIcon> */}
               
               <NavIcon href="/#contact" label="contact">
                 <LuMail className={iconClass} />

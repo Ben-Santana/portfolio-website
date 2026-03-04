@@ -5,10 +5,10 @@ import { LuExternalLink } from 'react-icons/lu';
 const awards = [
   {
     id: 1,
-    title: 'HackUMASS XII 2nd Place',
+    title: 'HackUMASS XII Winner',
     issuer: 'HackUMASS XII',
     year: '2024',
-    description: 'Second place in HackUMASS XII hackathon with over 500 participants.',
+    description: 'Won HackUMASS XII hackathon with over 500 participants.',
     link: 'https://devpost.com/basantana',
   },
   {

@@ -7,7 +7,7 @@ const educationDetails = [
     text: 'GPA: 3.9/4.0',
   },
   {
-    text: 'Events Chair, IEEE Student Branch',
+    text: 'Hackathon Manager, ACM Student Branch',
   },
   {
     text: 'Charles O. Thompson Scholar',
