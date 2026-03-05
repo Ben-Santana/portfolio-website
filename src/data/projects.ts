@@ -18,7 +18,7 @@ export const projects: Project[] = [
     imageUrl: "/project-images/arena.png",
     technologies: ["Unity", "AR", "Game Development", 'C#'],
     githubLink: "https://github.com/Ben-Santana/Arena",
-    videoUrl: "https://www.youtube.com/watch?v=PHGPq9pHwsA",
+    videoUrl: "https://www.youtube.com/embed/PHGPq9pHwsA",
     year: "2025",
   },
   {
