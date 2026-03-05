@@ -1,0 +1,33 @@
+## Overview
+
+This project explores the emergent behavior of **Physarum polycephalum**, a slime mold known for its ability to find efficient paths between food sources without a central nervous system. Using agent-based modeling, this simulation recreates the mesmerizing, organic patterns formed by these organisms.
+
+The simulation consists of thousands of independent "agents" that follow a simple set of rules. As they move, they leave behind a trail of pheromones, which diffuse and decay over time. Agents sense these trails and rotate toward areas of higher density, resulting in the complex, vein-like structures characteristic of slime molds.
+
+## Key Features
+- **Agent-Based Logic:** High-performance particle movement.
+- **Pheromone Dynamics:** Realistic trail diffusion and evaporation.
+- **Configurable Parameters:** Real-time adjustment of sensor angles, decay rates, and agent speeds.
+- **Emergent Complexity:** Watch simple rules evolve into complex biological networks.
+
+## How it Works
+
+The algorithm follows three primary steps every frame:
+
+1.  **Sense:** Each agent samples the trail map at three locations (front, left, and right).
+2.  **Move & Deposit:** Agents rotate toward the strongest signal and move forward, depositing a new trail at their current position.
+3.  **Process Environment:** The global trail map is blurred (diffusion) and slightly faded (decay).
+
+```javascript
+function updateAgent(agent, trailMap) {
+  const sensorSignal = agent.sense(trailMap);
+  
+  if (sensorSignal.left > sensorSignal.right) {
+    agent.angle -= agent.turnSpeed;
+  } else if (sensorSignal.right > sensorSignal.left) {
+    agent.angle += agent.turnSpeed;
+  }
+
+  agent.x += Math.cos(agent.angle) * agent.speed;
+  agent.y += Math.sin(agent.angle) * agent.speed;
+}
