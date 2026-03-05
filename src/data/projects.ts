@@ -18,6 +18,7 @@ export const projects: Project[] = [
     imageUrl: "/project-images/arena.png",
     technologies: ["Unity", "AR", "Game Development", 'C#'],
     githubLink: "https://github.com/Ben-Santana/Arena",
+    videoUrl: "https://www.youtube.com/watch?v=PHGPq9pHwsA",
     year: "2025",
   },
   {
@@ -118,16 +119,16 @@ export const projects: Project[] = [
     videoUrl: "https://www.youtube.com/embed/kW8oHoRLOc4",
     year: "2022",
   },
-  {
-    slug: "3d-renderer",
-    title: "Custom 3D Renderer",
-    description:
-      "Implementation of perspective projection and matrix-based rotation for 3D rendering.",
-    imageUrl: "/project-images/3d-renderer.jpg",
-    technologies: ["Java", "3D Graphics", "Linear Algebra"],
-    githubLink: "https://github.com/Ben-Santana/Custom-3DRenderer",
-    year: "2024",
-  },
+  // {
+  //   slug: "3d-renderer",
+  //   title: "Custom 3D Renderer",
+  //   description:
+  //     "Implementation of perspective projection and matrix-based rotation for 3D rendering.",
+  //   imageUrl: "/project-images/3d-renderer.jpg",
+  //   technologies: ["Java", "3D Graphics", "Linear Algebra"],
+  //   githubLink: "https://github.com/Ben-Santana/Custom-3DRenderer",
+  //   year: "2024",
+  // },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
