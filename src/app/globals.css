@@ -66,13 +66,21 @@
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
 }
 
-/* Apply transitions only to specific elements that need them */
-.bg-white, 
-.dark\:bg-neutral-900, 
-nav, 
-section, 
-.transition-colors {
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+/* Monospace opt-outs (the universal selector above wins otherwise) */
+.font-terminal,
+.font-terminal *,
+.font-mono,
+.font-mono * {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Terminal block caret */
+@keyframes caret-blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+.terminal-caret {
+  animation: caret-blink 1.1s steps(1) infinite;
 }
 
 /* Critical selector to disable ALL transitions during initial load */
@@ -81,6 +89,28 @@ html.disable-transitions *:before,
 html.disable-transitions *:after {
   transition: none !important;
   animation: none !important;
+}
+
+/* Theme toggle: circular reveal via the View Transitions API.
+   Disable the default crossfade; the new snapshot is clipped by JS. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+
+/* Fallback crossfade for browsers without View Transitions */
+html.theme-transitioning *,
+html.theme-transitioning *:before,
+html.theme-transitioning *:after {
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out !important;
 }
 
 @font-face {

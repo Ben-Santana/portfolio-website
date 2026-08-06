@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from '../context/ThemeContext';
 import { motion } from 'framer-motion';
-import { LuAnvil, LuMail, LuHouse, LuTerminal, LuBook, LuCar } from 'react-icons/lu';
+import { LuAnvil, LuMail, LuHouse, LuTerminal, LuBook } from 'react-icons/lu';
 import TerminalModal from './TerminalModal';
 
 interface NavIconProps {
@@ -13,38 +13,22 @@ interface NavIconProps {
   onClick?: (e: React.MouseEvent) => void;
   href?: string;
   className?: string;
-  title?: string;
 }
 
-const NavIcon = ({ children, label, onClick, href, className = '', title }: NavIconProps) => {
-  const content = (
-    <div className="relative group flex items-center justify-center px-1 -mx-1" title={title}>
-      <motion.div 
-        className="relative z-10 flex items-center"
-        whileHover={{ y: -2 }} 
-        whileTap={{ y: 0 }}
-      >
-        {children}
-      </motion.div>
-      {label && (
-        <span className="absolute top-full mt-1 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-          {label}
-        </span>
-      )}
-    </div>
-  );
+const NavIcon = ({ children, label, onClick, href, className = '' }: NavIconProps) => {
+  const classes = `flex items-center justify-center transition-colors duration-200 hover:text-neutral-900 dark:hover:text-white ${className}`;
 
   if (href) {
     return (
-      <Link href={href} className={`hover:text-neutral-900 dark:hover:text-white ${className}`}>
-        {content}
+      <Link href={href} className={classes} aria-label={label} title={label}>
+        {children}
       </Link>
     );
   }
 
   return (
-    <button onClick={onClick} className={`hover:text-neutral-900 dark:hover:text-white ${className}`}>
-      {content}
+    <button onClick={onClick} className={classes} aria-label={label} title={label}>
+      {children}
     </button>
   );
 };
@@ -58,27 +42,43 @@ export default function Navbar() {
 
   const iconClass = 'h-5 w-5';
 
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(isHome ? 0 : 1);
 
   useEffect(() => {
     const handleScroll = () => {
-      const progress = Math.min(window.scrollY / 200, 1);
+      if (!isHome) {
+        setScrollProgress(1);
+        return;
+      }
+
+      const projectsEl = document.getElementById('projects');
+      if (!projectsEl) return;
+
+      const distanceIntoProjects = 64 - projectsEl.getBoundingClientRect().top;
+      const progress = Math.min(Math.max(distanceIntoProjects / 200, 0), 1);
       setScrollProgress(progress);
     };
+
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('resize', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [isHome]);
 
   return (
     <>
       <nav
         className="fixed w-full z-50"
         style={{
-          backgroundColor: theme === 'dark'
-            ? `rgba(23, 23, 23, ${1 - scrollProgress * 0.1})`
-            : `rgba(255, 255, 255, ${1 - scrollProgress * 0.1})`,
-          backdropFilter: `blur(${scrollProgress * 8}px)`,
-          boxShadow: scrollProgress > 0.1 ? `0 1px 3px rgba(0,0,0,${scrollProgress * 0.1})` : 'none',
+          backgroundColor: scrollProgress === 0
+            ? 'transparent'
+            : theme === 'dark'
+              ? `rgba(23, 23, 23, ${scrollProgress})`
+              : `rgba(255, 255, 255, ${scrollProgress})`,
+          backdropFilter: scrollProgress > 0 ? `blur(${scrollProgress * 8}px)` : 'none',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -126,17 +126,16 @@ export default function Navbar() {
               >
                 <LuTerminal className={iconClass} />
               </NavIcon>
-
-              <NavIcon href="/skills" label="skills">
-                <LuCar className={iconClass} />
-              </NavIcon>
             </div>
 
             {/* theme toggle */}
             <div className="ml-auto hidden md:flex items-center">
               <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.95 }}>
                 <button
-                  onClick={toggleTheme}
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    toggleTheme({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+                  }}
                   className="p-2 rounded-lg"
                   aria-label="Toggle theme"
                 >
@@ -212,8 +211,9 @@ export default function Navbar() {
 
               {/* theme toggle */}
               <button
-                onClick={() => {
-                  toggleTheme();
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  toggleTheme({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
                   setIsMenuOpen(false);
                 }}
                 className="p-2 rounded-lg"

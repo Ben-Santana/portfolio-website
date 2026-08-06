@@ -5,48 +5,75 @@ type Theme = 'light' | 'dark';
 
 interface ThemeContextType {
   theme: Theme;
-  toggleTheme: () => void;
+  /** Toggle the theme. Pass the click position to reveal from that point. */
+  toggleTheme: (origin?: { x: number; y: number }) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+type DocumentWithViewTransition = Document & {
+  startViewTransition?: (callback: () => void) => { ready: Promise<void> };
+};
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Initialize with a default that matches the class set by our inline script
+  // Default matches the class set by the inline script in layout.tsx
   const [theme, setTheme] = useState<Theme>('dark');
 
-  // On mount, read the theme from the document class that was set by our inline script
+  // On mount, read the theme the inline script already applied
   useEffect(() => {
-    // Get the current theme from the document class
     const isDark = document.documentElement.classList.contains('dark');
     setTheme(isDark ? 'dark' : 'light');
   }, []);
 
-  // Update document class and localStorage when theme changes
-  useEffect(() => {
-    // Add a temporary class to disable transitions during theme change
-    document.documentElement.classList.add('disable-transitions');
-    
-    // Update document class
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(theme);
-    
-    // Update localStorage
+  const applyTheme = (next: Theme) => {
+    const doc = document.documentElement;
+    doc.classList.remove('light', 'dark');
+    doc.classList.add(next);
     try {
-      localStorage.setItem('theme', theme);
+      localStorage.setItem('theme', next);
     } catch {
       // Ignore localStorage errors
     }
-    
-    // Remove the transition blocker after a short delay
-    const timer = setTimeout(() => {
-      document.documentElement.classList.remove('disable-transitions');
-    }, 20);
-    
-    return () => clearTimeout(timer);
-  }, [theme]);
+    setTheme(next);
+  };
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+  const toggleTheme = (origin?: { x: number; y: number }) => {
+    const next: Theme = theme === 'light' ? 'dark' : 'light';
+    const doc = document as DocumentWithViewTransition;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (typeof doc.startViewTransition === 'function' && !reducedMotion) {
+      // Circular reveal expanding from the toggle (or viewport center)
+      const x = origin?.x ?? window.innerWidth / 2;
+      const y = origin?.y ?? window.innerHeight / 2;
+      const maxRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y),
+      );
+
+      const transition = doc.startViewTransition(() => applyTheme(next));
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${maxRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 500,
+            easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+            pseudoElement: '::view-transition-new(root)',
+          },
+        );
+      });
+    } else {
+      // Fallback: smooth color crossfade instead of a hard cut
+      const root = document.documentElement;
+      root.classList.add('theme-transitioning');
+      applyTheme(next);
+      window.setTimeout(() => root.classList.remove('theme-transitioning'), 350);
+    }
   };
 
   return (
