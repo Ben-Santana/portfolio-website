@@ -182,11 +182,14 @@ export default function WireframeModel({
     posAttr.needsUpdate = true;
     lineGeo.computeBoundingSphere();
 
-    // Idle rotation + scroll spin + mouse parallax
+    // Idle rotation + scroll spin + mouse parallax.
+    // Shape 3 (circuit board) gets a steeper pitch so the top plane reads clearly.
     const g = group.current;
     const time = state.clock.elapsedTime;
+    const pcbTiltBlend = smoothstep(clamp01((sm.shape - 2) / 1));
+    const tiltX = 0.1 + pcbTiltBlend * 0.42;
     g.rotation.y = time * 0.12 + params.spin + sm.mx * 0.25;
-    g.rotation.x = 0.1 + sm.my * 0.18;
+    g.rotation.x = tiltX + sm.my * 0.18;
     g.position.x = sm.x;
     g.scale.setScalar(scale * params.clickScale);
 

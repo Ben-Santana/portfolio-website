@@ -1,9 +1,9 @@
 export const roles = [
-  'software engineer',
-  'pianist',
-  'embedded systems engineer',
+  'a software engineer',
+  'a pianist',
+  'an embedded systems engineer',
   'always curious',
-  'WPI student',
+  'a WPI student',
 ];
 
 export const awards = [

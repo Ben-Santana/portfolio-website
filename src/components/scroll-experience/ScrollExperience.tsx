@@ -74,43 +74,55 @@ function clearHeroEntranceStyles(hero: HTMLElement) {
   });
 }
 
-function scrollToProjects(e: React.MouseEvent<HTMLAnchorElement>) {
-  e.preventDefault();
-  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-}
 
-function RolesRoll({ words, animated }: { words: string[]; animated: boolean }) {
-  const [idx, setIdx] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
+function TypewriterRoles({ phrases, animated }: { phrases: string[]; animated: boolean }) {
+  const longestPhrase = phrases.reduce((a, b) => (a.length > b.length ? a : b), '');
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [text, setText] = useState(animated ? '' : phrases[0]);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    if (!animated) return;
-    const id = setInterval(() => {
-      const el = ref.current;
-      if (!el) return;
-      animate(el, {
-        translateY: ['0%', '-130%'],
-        opacity: [1, 0],
-        duration: 240,
-        ease: 'inQuad',
-        onComplete: () => {
-          setIdx((i) => (i + 1) % words.length);
-          animate(el, {
-            translateY: ['130%', '0%'],
-            opacity: [0, 1],
-            duration: 300,
-            ease: 'outQuad',
-          });
-        },
-      });
-    }, 2600);
-    return () => clearInterval(id);
-  }, [animated, words.length]);
+    if (!animated) {
+      setText(phrases[0]);
+      return;
+    }
+
+    const current = phrases[phraseIdx];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!deleting && text.length < current.length) {
+      timeout = setTimeout(() => {
+        setText(current.slice(0, text.length + 1));
+      }, 58);
+    } else if (!deleting && text.length === current.length) {
+      timeout = setTimeout(() => setDeleting(true), 2000);
+    } else if (deleting && text.length > 0) {
+      timeout = setTimeout(() => {
+        setText(current.slice(0, text.length - 1));
+      }, 32);
+    } else {
+      timeout = setTimeout(() => {
+        setDeleting(false);
+        setPhraseIdx((i) => (i + 1) % phrases.length);
+      }, 350);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [animated, phrases, phraseIdx, text, deleting]);
 
   return (
-    <span className="inline-flex overflow-hidden align-bottom">
-      <span ref={ref} className="inline-block font-semibold text-neutral-800 dark:text-neutral-100">
-        {words[idx]}
+    <span className="relative inline-grid align-bottom">
+      <span className="invisible col-start-1 row-start-1 font-semibold" aria-hidden>
+        {longestPhrase}
+      </span>
+      <span className="col-start-1 row-start-1 font-semibold text-neutral-800 dark:text-neutral-100">
+        {text}
+        {animated && (
+          <span
+            className="terminal-caret ml-px inline-block w-[2px] h-[0.9em] align-[-0.05em] bg-neutral-800 dark:bg-neutral-100"
+            aria-hidden
+          />
+        )}
       </span>
     </span>
   );
@@ -246,7 +258,7 @@ function HeroContent({
           isMobile ? 'mt-4 text-base' : 'mt-6 text-xl'
         }`}
       >
-        i&apos;m a <RolesRoll words={roles} animated={animated} />
+        i&apos;m also <TypewriterRoles phrases={roles} animated={animated} />
       </p>
       <p
         className={`hero-meta max-w-md text-neutral-500 dark:text-neutral-400 ${
@@ -255,16 +267,6 @@ function HeroContent({
       >
         building intelligent systems, simulations, and hardware integrations.
       </p>
-      <a
-        href="#projects"
-        onClick={scrollToProjects}
-        className={`hero-meta inline-flex items-center gap-2 text-sm font-medium text-neutral-800 dark:text-neutral-200 border-b border-neutral-300 dark:border-neutral-600 pb-0.5 hover:border-neutral-800 dark:hover:border-white transition-colors cursor-pointer ${
-          isMobile ? 'mt-4' : 'mt-8'
-        }`}
-      >
-        my projects
-        <span aria-hidden>↓</span>
-      </a>
     </div>
   );
 }
@@ -647,18 +649,11 @@ function StackedHero({ reducedMotion }: { reducedMotion: boolean }) {
         ben santana
       </h1>
       <p className="mt-5 text-xl text-neutral-600 dark:text-neutral-300">
-        i&apos;m a <RolesRoll words={roles} animated={!reducedMotion} />
+        i&apos;m also <TypewriterRoles phrases={roles} animated={!reducedMotion} />
       </p>
       <p className="mt-2 text-neutral-500 dark:text-neutral-400">
         building intelligent systems, simulations, and hardware integrations.
       </p>
-      <a
-        href="#projects"
-        onClick={scrollToProjects}
-        className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-neutral-800 dark:text-neutral-200 border-b border-neutral-300 dark:border-neutral-600 pb-0.5 cursor-pointer"
-      >
-        my projects <span aria-hidden>↓</span>
-      </a>
     </div>
   );
 }

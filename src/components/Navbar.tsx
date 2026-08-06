@@ -7,6 +7,60 @@ import { motion } from 'framer-motion';
 import { LuAnvil, LuMail, LuHouse, LuTerminal, LuBook } from 'react-icons/lu';
 import TerminalModal from './TerminalModal';
 
+interface NavTooltipProps {
+  label: string;
+  visible: boolean;
+}
+
+const NavTooltip = ({ label, visible }: NavTooltipProps) => {
+  const cornerX = -8;
+  const cornerY = 14;
+  const endX = -50;
+  const svgWidth = 104;
+  const viewMinX = -svgWidth / 2;
+  const endPx = ((endX - viewMinX) / svgWidth) * svgWidth;
+  const textGap = 6;
+
+  return (
+    <div
+      className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 z-[60] pointer-events-none overflow-visible transition-opacity duration-200 ${
+        visible ? 'opacity-100' : 'opacity-0'
+      }`}
+      aria-hidden={!visible}
+    >
+      <div className="relative">
+        <svg
+          width={svgWidth}
+          height="20"
+          viewBox={`${viewMinX} -4 ${svgWidth} 24`}
+          fill="none"
+          className="block overflow-visible text-neutral-500 dark:text-neutral-400"
+          aria-hidden
+        >
+          <path
+            d={`M 0 0 L ${cornerX} ${cornerY} H ${endX}`}
+            stroke="currentColor"
+            strokeWidth={1.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <circle cx={0} cy={0} r={2.5} fill="currentColor" />
+        </svg>
+        <span
+          className="absolute text-[11px] font-light italic leading-none text-neutral-700 dark:text-neutral-200 whitespace-nowrap"
+          style={{
+            top: cornerY,
+            left: endPx,
+            transform: `translate(calc(-100% - ${textGap}px), -50%)`,
+          }}
+        >
+          {label}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 interface NavIconProps {
   children: React.ReactNode;
   label?: string;
@@ -16,20 +70,28 @@ interface NavIconProps {
 }
 
 const NavIcon = ({ children, label, onClick, href, className = '' }: NavIconProps) => {
+  const [hovered, setHovered] = useState(false);
   const classes = `flex items-center justify-center transition-colors duration-200 hover:text-neutral-900 dark:hover:text-white ${className}`;
 
-  if (href) {
-    return (
-      <Link href={href} className={classes} aria-label={label} title={label}>
-        {children}
-      </Link>
-    );
-  }
-
-  return (
-    <button onClick={onClick} className={classes} aria-label={label} title={label}>
+  const content = href ? (
+    <Link href={href} className={classes} aria-label={label}>
+      {children}
+    </Link>
+  ) : (
+    <button onClick={onClick} className={classes} aria-label={label}>
       {children}
     </button>
+  );
+
+  return (
+    <div
+      className="relative overflow-visible"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {content}
+      {label && <NavTooltip label={label} visible={hovered} />}
+    </div>
   );
 };
 
@@ -71,7 +133,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className="fixed w-full z-50"
+        className="fixed w-full z-50 overflow-visible"
         style={{
           backgroundColor: scrollProgress === 0
             ? 'transparent'
@@ -81,8 +143,8 @@ export default function Navbar() {
           backdropFilter: scrollProgress > 0 ? `blur(${scrollProgress * 8}px)` : 'none',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative flex items-center h-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
+          <div className="relative flex items-center h-16 overflow-visible">
 
             {!isHome && (
               <Link
@@ -94,35 +156,18 @@ export default function Navbar() {
             )}
 
             {/* desktop nav icons */}
-            <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center space-x-8 text-neutral-600 dark:text-neutral-300">
-              {/* <NavIcon 
-                href="/#achievements"
-                label="credentials"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const element = document.getElementById('achievements');
-                  if (element) {
-                    element.scrollIntoView({ 
-                      behavior: 'smooth',
-                      block: 'center'
-                    });
-                  }
-                }}
-              >
-                <LuBook className={iconClass} />
-              </NavIcon>
-              
+            <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center space-x-8 text-neutral-600 dark:text-neutral-300 overflow-visible">
               <NavIcon href="/#projects" label="projects">
                 <LuAnvil className={iconClass} />
-              </NavIcon> */}
-              
+              </NavIcon>
+
               <NavIcon href="/#contact" label="contact">
                 <LuMail className={iconClass} />
               </NavIcon>
               
-              <NavIcon 
+              <NavIcon
                 onClick={() => setTerminalOpen(true)}
-                label="terminal"
+                label="shell"
               >
                 <LuTerminal className={iconClass} />
               </NavIcon>
