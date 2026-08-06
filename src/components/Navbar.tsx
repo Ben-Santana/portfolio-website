@@ -67,9 +67,10 @@ interface NavIconProps {
   onClick?: (e: React.MouseEvent) => void;
   href?: string;
   className?: string;
+  showTooltip?: boolean;
 }
 
-const NavIcon = ({ children, label, onClick, href, className = '' }: NavIconProps) => {
+const NavIcon = ({ children, label, onClick, href, className = '', showTooltip = false }: NavIconProps) => {
   const [hovered, setHovered] = useState(false);
   const classes = `flex items-center justify-center transition-colors duration-200 hover:text-neutral-900 dark:hover:text-white ${className}`;
 
@@ -90,7 +91,7 @@ const NavIcon = ({ children, label, onClick, href, className = '' }: NavIconProp
       onMouseLeave={() => setHovered(false)}
     >
       {content}
-      {label && <NavTooltip label={label} visible={hovered} />}
+      {label && <NavTooltip label={label} visible={hovered && showTooltip} />}
     </div>
   );
 };
@@ -130,6 +131,8 @@ export default function Navbar() {
     };
   }, [isHome]);
 
+  const showNavTooltips = isHome && scrollProgress === 0;
+
   return (
     <>
       <nav
@@ -157,17 +160,18 @@ export default function Navbar() {
 
             {/* desktop nav icons */}
             <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center space-x-8 text-neutral-600 dark:text-neutral-300 overflow-visible">
-              <NavIcon href="/#projects" label="projects">
+              <NavIcon href="/#projects" label="projects" showTooltip={showNavTooltips}>
                 <LuAnvil className={iconClass} />
               </NavIcon>
 
-              <NavIcon href="/#contact" label="contact">
+              <NavIcon href="/#contact" label="contact" showTooltip={showNavTooltips}>
                 <LuMail className={iconClass} />
               </NavIcon>
               
               <NavIcon
                 onClick={() => setTerminalOpen(true)}
                 label="shell"
+                showTooltip={showNavTooltips}
               >
                 <LuTerminal className={iconClass} />
               </NavIcon>
