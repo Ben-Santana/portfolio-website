@@ -482,12 +482,28 @@ function MobilePinnedExperience() {
     }
 
     const panelBaseOffsets = [0, 0, 0, 0];
+    // Match desktop beat windows so each text panel aligns with its shape beat.
     const beats: BeatWindow[] = [
-      [0, 0, 0.17, 0.23],
-      [0.19, 0.25, 0.39, 0.45],
-      [0.41, 0.47, 0.61, 0.67],
-      [0.63, 0.69, 1.0, 1.0],
+      [0, 0, 0.128, 0.198],
+      [0.314, 0.395, 0.437, 0.507],
+      [0.616, 0.698, 0.74, 0.809],
+      [0.919, 1.0, 1.0, 1.0],
     ];
+
+    const tl = createTimeline({
+      defaults: { ease: 'inOutQuad' },
+      autoplay: onScroll({
+        target: track,
+        sync: true,
+        enter: 'top top',
+        leave: 'bottom bottom',
+      }),
+    });
+
+    tl.add(p, { spin: [0, Math.PI * 2.5], duration: 4200, ease: 'linear' }, 0);
+    tl.add(p, { shape: [0, 1], duration: 650, ease: 'inOutSine' }, 780);
+    tl.add(p, { shape: [1, 2], duration: 650, ease: 'inOutSine' }, 2080);
+    tl.add(p, { shape: [2, 3], duration: 650, ease: 'inOutSine' }, 3380);
 
     let heroEntranceDone = false;
 
@@ -504,8 +520,6 @@ function MobilePinnedExperience() {
 
       setPanelOpacities(opacities);
       setPanelOffsets(offsets);
-      p.spin = progress * Math.PI * 2.5;
-      p.shape = progress * 3;
     };
 
     const entranceDone = entranceAnims.at(-1);
@@ -524,6 +538,7 @@ function MobilePinnedExperience() {
       window.removeEventListener('resize', apply);
       drawIn.revert();
       entranceAnims.forEach((a) => a.revert());
+      tl.revert();
     };
   }, []);
 

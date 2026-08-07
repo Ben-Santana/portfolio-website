@@ -11,17 +11,6 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "arena",
-    title: "ARena",
-    description:
-      "ARena is a shared AR experience built for stadiums and live venues",
-    imageUrl: "/project-images/arena.png",
-    technologies: ["Unity", "AR", "Game Development", 'C#'],
-    githubLink: "https://github.com/Ben-Santana/Arena",
-    videoUrl: "https://www.youtube.com/embed/PHGPq9pHwsA",
-    year: "2025",
-  },
-  {
     slug: "dnd-narrator",
     title: "Intelligent D&D Narrator",
     description:
@@ -38,6 +27,17 @@ export const projects: Project[] = [
     ],
     githubLink: "https://github.com/Ben-Santana/AI-Dungeon-Master",
     year: "2023",
+  },
+  {
+    slug: "arena",
+    title: "ARena",
+    description:
+      "ARena is a shared AR experience built for stadiums and live venues",
+    imageUrl: "/project-images/arena.png",
+    technologies: ["Unity", "AR", "Game Development", 'C#'],
+    githubLink: "https://github.com/Ben-Santana/Arena",
+    videoUrl: "https://www.youtube.com/embed/PHGPq9pHwsA",
+    year: "2025",
   },
   {
     slug: "wireless-security",
