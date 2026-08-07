@@ -146,7 +146,6 @@ function AwardsContent() {
             <>
               <h3 className="text-2xl font-bold text-neutral-900 dark:text-white">
                 {a.title}
-                {a.link && <span className="ml-2 text-sm align-super text-neutral-400">↗</span>}
               </h3>
               <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
                 {a.issuer} · {a.year}
